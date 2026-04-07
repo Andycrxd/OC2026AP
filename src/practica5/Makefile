@@ -7,7 +7,7 @@ run:
 	../../bin/practica5.exe
 
 
-# ===== INCISO A =====
+# ===== INCISO A  =====)
 builda:
 	nasm -f elf p5a.asm
 	ld -m elf_i386 p5a.o -o ../../bin/practica5a.exe ../../lib/libpc_io.a
