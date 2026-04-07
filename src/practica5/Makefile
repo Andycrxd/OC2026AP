@@ -59,3 +59,26 @@ buildf:
 
 runf:
 	../../bin/practica5f.exe
+
+
+todo:
+	make build
+	make run
+
+	make builda
+	make runa
+
+	make buildb
+	make runb
+
+	make buildc
+	make runc
+
+	make buildd
+	make rund
+
+	make builde
+	make rune
+
+	make buildf
+	make runf
