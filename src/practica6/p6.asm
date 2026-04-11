@@ -5,20 +5,20 @@ global _start
 
 _start:
 
-    ; Mostrar mensaje
+    ; Mensaje inicial
     mov edx, msg1
     call puts
 
     ; Capturar cadena
-    mov bl, [len]      ; tamaño máximo
-    mov edx, cad       ; dirección de la cadena
+    mov bl, [len]
+    mov edx, cad
     call capturar
 
     ; Salto de línea
     mov al, [nlin]
     call putchar
 
-    ; Mostrar ORIGINAL
+    ; ORIGINAL
     mov edx, msg2
     call puts
     mov edx, cad
@@ -27,7 +27,6 @@ _start:
     ; MAYÚSCULAS
     mov edx, cad
     call mayusculas
-
     mov edx, msg3
     call puts
     mov edx, cad
@@ -36,20 +35,20 @@ _start:
     ; MINÚSCULAS
     mov edx, cad
     call minusculas
-
     mov edx, msg4
     call puts
     mov edx, cad
     call puts
 
-    ; Salida del programa
+    ; Salida correcta
     mov eax, 1
+    mov ebx, 0
     int 0x80
 
 
-; ================================
-; PROCEDIMIENTO: CAPTURAR
-; ================================
+; ============================
+; CAPTURAR
+; ============================
 capturar:
     push edx
     push cx
@@ -59,19 +58,18 @@ capturar:
 
 .ciclo:
     call getch
-    cmp al, 127
-    jne .guardar
 
+    cmp al, 127
+    jne .verificar
     call borrar
     jmp .ciclo
 
-.guardar:
-    call putchar
-    mov [edx], al
-
-    cmp al, 0xA   ; Enter
+.verificar:
+    cmp al, 0xA      ; ENTER
     je .salir
 
+    call putchar
+    mov [edx], al
     inc edx
     loop .ciclo
 
@@ -83,9 +81,9 @@ capturar:
     ret
 
 
-; ================================
-; BORRAR (backspace)
-; ================================
+; ============================
+; BORRAR
+; ============================
 borrar:
     push ax
 
@@ -100,9 +98,9 @@ borrar:
     ret
 
 
-; ================================
+; ============================
 ; MAYÚSCULAS
-; ================================
+; ============================
 mayusculas:
     push edx
 
@@ -128,9 +126,9 @@ mayusculas:
     ret
 
 
-; ================================
+; ============================
 ; MINÚSCULAS
-; ================================
+; ============================
 minusculas:
     push edx
 
