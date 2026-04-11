@@ -18,9 +18,12 @@ ciclo:
     jmp ciclo
 
 fin:
+    mov edx,msg
+    call puts 
     mov eax, 1
     mov ebx, 0
     int 0x80
 
 section .data
     cad db "hola",0
+    msg db "",0xA,0
