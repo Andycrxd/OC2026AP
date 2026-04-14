@@ -14,7 +14,7 @@ _start:
     ;mensaje ya cambiado
     mov ebx, msg
     mov esi, 14
-    mov byte [ebx + esi*1+5], '%'
+    mov byte [ebx + esi*2+5], '%'
 
 
     ;impriem la devuelta el mensaje ya cambiado
