@@ -158,7 +158,7 @@ section .data
     msg1 db "Ingresa una cadena: ",0
     msg2 db 0xA,"Original: ",0
     msg3 db 0xA,"Mayusculas: ",0
-    msg4 db 0xA,"Minusculas: ",0
+    msg4 db 0xA,"Minusculas: ",0xa,0
 
     nlin db 0xA
     len db 64
