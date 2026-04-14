@@ -13,7 +13,7 @@ _start:
 
     ;mensaje ya cambiado
     mov ebx, msg
-    mov esi, 14
+    mov esi, 9
     mov byte [ebx + esi*2+5], '%'
 
 
