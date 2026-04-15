@@ -52,7 +52,9 @@ _start:
 capturar:
     push edx
     push cx
+    push esi
 
+    mov esi,0
     mov cx, bx
     dec cx
 
@@ -69,13 +71,14 @@ capturar:
     je .salir
 
     call putchar
-    mov [edx], al
-    inc edx
+    mov [edx+esi], al
+    inc esi
     loop .ciclo
 
 .salir:
     mov byte [edx], 0
-
+    
+    pop esi
     pop cx
     pop edx
     ret
@@ -158,7 +161,7 @@ section .data
     msg1 db "Ingresa una cadena: ",0
     msg2 db 0xA,"Original: ",0
     msg3 db 0xA,"Mayusculas: ",0
-    msg4 db 0xA,"Minusculas: ",0,0ax
+    msg4 db 0xA,"Minusculas: ",0
 
     nlin db 0xA
     len db 64
