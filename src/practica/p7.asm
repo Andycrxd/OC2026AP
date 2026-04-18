@@ -58,8 +58,23 @@ _start:
 
      jmp .continuar
 
-.continuar:
-    loop .ciclo
+.ciclo:
+    call getche
+
+    cmp al, 0xA
+    je .fin
+
+    cmp al, 8
+    je .borrar
+
+    cmp cx, 0        ; ya no hay espacio
+    je .ciclo
+
+    mov [edx], al
+    inc edx
+    dec cx           ;  SOLO aquí restas
+
+    jmp .ciclo
 
 
 .fin:
