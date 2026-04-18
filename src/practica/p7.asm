@@ -20,13 +20,13 @@ _start:
     call putchar
 
     ; ORIGINAL
-    mov edx, msg2
-    call puts
-    mov edx, cad
-    call puts
+    mov edx, msg2     ; asigna la cadena
+    call puts          ; la muestra 
+    mov edx, cad        ;   edx apunta al inicio por que en capturar no lo moviste edx y cad solo es la direccion incial
+    call puts     ; imprime edx
 
     ; MAYÚSCULAS
-    mov edx, cad
+    mov edx, cad   ; mueve edx a la direccion iniciar
     call mayusculas
     mov edx, msg3
     call puts
@@ -60,14 +60,14 @@ capturar:
     push esi
 
     mov esi, 0
-    mov cx, bx
-    dec cx
+    mov cx, bx   ; en bx esta dentro   esta bh y bl osea 64 bytes de bl
+    dec cx      ; decrementamos para el espacio de 0
 
 .ciclo:
     call getch
 
     cmp al, 127  ; pregunta si son iguales 
-    jne .verificar  ;si son iguaes no salta a verificar
+    jne .verificar  ;si son iguaes no entra a verificar
 
     cmp esi, 0          ; ¿ya estamos al inicio?
     je .ciclo           ; no borrar
@@ -77,7 +77,7 @@ capturar:
     jmp .ciclo
 
 .verificar:
-    cmp al, 0xA         ; ENTER
+    cmp al, 0xA         ; si es un ENTER entra en salir
     je .salir
 
     call putchar    ; muestra  la letrra 
@@ -103,12 +103,12 @@ capturar:
 borrar:
     push ax
 
-    mov al, 0x8
-    call putchar
-    mov al, ' '
-    call putchar
-    mov al, 0x8
-    call putchar
+    mov al, 0x8   ; backspace
+    call putchar   ; ahora esta el cursor posicion ala izq
+    mov al, ' '    ;  cambia donde  esta el cursor a vacio
+    call putchar   ; imprime y desaparece el valor 
+    mov al, 0x8    ; otro bakspace 
+    call putchar   ; ahora el cursor esta a la izq
 
     pop ax
     ret
@@ -122,19 +122,19 @@ borrar:
 ; MAYÚSCULAS
 
 mayusculas:
-    push edx
+    push edx  ; aguarda la captura
 
 .recorrer:
     mov al, [edx]
-    cmp al, 0
+    cmp al, 0         ; al == 0 entra  a fin
     je .fin
 
-    cmp al, 'a'
-    jl .sig
-    cmp al, 'z'
-    jg .sig
+    cmp al, 'a'  ; al < a
+    jl .sig      ; salta si es menor
+    cmp al, 'z'   ;  al > z
+    jg .sig        ; salta si es mayor
 
-    sub al, 32
+    sub al, 32  ; convertir a mayuscula 
     mov [edx], al
 
 .sig:
