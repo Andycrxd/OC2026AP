@@ -56,11 +56,11 @@ _start:
     mov al, 8
     call putchar
 
-
+     jmp .continuar
 
 .continuar:
     loop .ciclo
-    
+
 
 .fin:
     mov byte [edx], 0   ; fin de cadena
