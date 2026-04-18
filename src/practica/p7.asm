@@ -11,6 +11,7 @@ _start:
 
     ; Capturar cadena
     mov bl, [len]
+    mov bh,0
     mov edx, cad
     call capturar
 
