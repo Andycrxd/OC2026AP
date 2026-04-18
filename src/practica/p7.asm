@@ -7,13 +7,13 @@ _start:
 
     ; Mensaje inicial
     mov edx, msg1
-    call puts
+    call puts              ;funcioon para imprimir edx
 
     ; Capturar cadena
-    mov bl, [len]
-    mov bh,0
-    mov edx, cad
-    call capturar
+    mov bl, [len]         ; asignamos bytes a bl
+    mov bh,0               ; asignamos cero para que no alla problemas despues
+    mov edx, cad            ;le asignamos 64 espacios vacios
+    call capturar       
 
     ; Salto de línea
     mov al, [nlin]
@@ -51,9 +51,9 @@ _start:
     int 0x80
 
 
-; ============================
+; ============================================================================
 ; CAPTURAR
-; ============================
+
 capturar:
     push edx
     push cx
@@ -66,8 +66,8 @@ capturar:
 .ciclo:
     call getch
 
-    cmp al, 127
-    jne .verificar
+    cmp al, 127  ; pregunta si son iguales 
+    jne .verificar  ;si son iguaes no salta a verificar
 
     cmp esi, 0          ; ¿ya estamos al inicio?
     je .ciclo           ; no borrar
@@ -80,7 +80,7 @@ capturar:
     cmp al, 0xA         ; ENTER
     je .salir
 
-    call putchar
+    call putchar    ; muestra  la letrra 
     mov [edx+esi], al
     inc esi
     loop .ciclo
@@ -94,9 +94,12 @@ capturar:
     ret
 
 
-; ============================
+; CAPTURAR fin
+; ============================================================================
+
+; ============================================================================
 ; BORRAR
-; ============================
+
 borrar:
     push ax
 
@@ -110,10 +113,14 @@ borrar:
     pop ax
     ret
 
+; BORRAR FIN
+; ============================================================================
 
-; ============================
+
+
+; ============================================================================
 ; MAYÚSCULAS
-; ============================
+
 mayusculas:
     push edx
 
@@ -139,9 +146,14 @@ mayusculas:
     ret
 
 
-; ============================
+
+; MAYÚSCULAS FIN 
+; ============================================================================
+
+
+; ============================================================================
 ; MINÚSCULAS
-; ============================
+
 minusculas:
     push edx
 
@@ -165,6 +177,12 @@ minusculas:
 .fin:
     pop edx
     ret
+
+
+
+; MINÚSCULAS FIN
+; ============================================================================
+
 
 
 section .data
