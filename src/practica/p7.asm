@@ -29,7 +29,7 @@ _start:
     dec cx          ; dejar espacio para '\0'
 
 .ciclo:
-    call getch
+    call getche
 
     cmp al, 0xA     ; ENTER
     je .fin
