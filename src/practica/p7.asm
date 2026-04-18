@@ -61,18 +61,21 @@ _start:
 .ciclo:
     call getche
 
-    cmp al, 0xA
+    cmp al, 0xA      ; ENTER
     je .fin
 
-    cmp al, 8
+    cmp al, 8        ; BACKSPACE clásico
     je .borrar
 
-    cmp cx, 0        ; ya no hay espacio
+    cmp al, 127      ; BACKSPACE en tu consola (^?)
+    je .borrar
+
+    cmp cx, 0        ; sin espacio
     je .ciclo
 
     mov [edx], al
     inc edx
-    dec cx           ;  SOLO aquí restas
+    dec cx
 
     jmp .ciclo
 
