@@ -40,6 +40,10 @@ _start:
     mov edx, cad
     call puts
 
+    ; Salto de líne pra que se vea mejor
+    mov al, [nlin]
+    call putchar
+    
     ; Salida correcta
     mov eax, 1
     mov ebx, 0
