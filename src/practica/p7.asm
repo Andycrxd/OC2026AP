@@ -27,6 +27,7 @@ _start:
 
     mov cx, ax      ; límite
     dec cx          ; dejar espacio para '\0'
+    mov esi, edx   ; guardar inicio del buffer
 
 .ciclo:
     call getche
@@ -34,10 +35,32 @@ _start:
     cmp al, 0xA     ; ENTER
     je .fin
 
+    cmp al, 8         ; BACKSPACE
+    je .borrar
+
     mov [edx], al   ; guardar
     inc edx
+    jmp .continuar
 
+.borrar:
+    cmp edx, esi      ; ¿ya estamos al inicio?
+    je .continuar     ; no borrar
+
+    dec edx           ; regresar en buffer
+
+    ; borrar en pantalla (truco clásico)
+    mov al, 8         ; backspace
+    call putchar
+    mov al, ' '
+    call putchar
+    mov al, 8
+    call putchar
+
+
+
+.continuar:
     loop .ciclo
+    
 
 .fin:
     mov byte [edx], 0   ; fin de cadena
