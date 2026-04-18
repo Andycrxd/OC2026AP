@@ -72,6 +72,7 @@ capturar:
 
     call putchar
     mov [edx+esi], al
+    
     inc esi
     loop .ciclo
 
