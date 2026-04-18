@@ -1,76 +1,43 @@
-%include "../../lib/pc_io.inc"  	; incluir declaraciones de procedimiento externos
-								; que se encuentran en la biblioteca libpc_io.a
+%include "../../lib/pc_io.inc"
 
-section	.text
-	global _start       ;referencia para inicio de programa
-	
-_start:                   
+section .text
+global _start
 
-    ;Mensaje inicial 
-    mov edx,msg1
+_start:
+
+    mov edx, msg1
     call puts
 
-    mov edx, cad     ; apuntar al buffer
-    mov ax, 64       ; tamaño máximo
-
+    mov edx, cad
+    mov ax, 64
     call Capturar
 
     mov edx, cad
     call puts
 
-
-
-
-    Capturar:
+; -------------------------
+Capturar:
     push edx
     push cx
+    push esi
 
-    mov cx, ax      ; límite
-    dec cx          ; dejar espacio para '\0'
-    mov esi, edx   ; guardar inicio del buffer
-
-.ciclo:
-    call getche
-
-    cmp al, 0xA     ; ENTER
-    je .fin
-
-    cmp al, 8         ; BACKSPACE
-    je .borrar
-
-    mov [edx], al   ; guardar
-    inc edx
-    jmp .continuar
-
-.borrar:
-    cmp edx, esi      ; ¿ya estamos al inicio?
-    je .continuar     ; no borrar
-
-    dec edx           ; regresar en buffer
-
-    ; borrar en pantalla (truco clásico)
-    mov al, 8         ; backspace
-    call putchar
-    mov al, ' '
-    call putchar
-    mov al, 8
-    call putchar
-
-     jmp .continuar
+    mov cx, ax
+    dec cx
+    mov esi, edx   ; inicio del buffer
 
 .ciclo:
     call getche
 
-    cmp al, 0xA      ; ENTER
+    cmp al, 0xA        ; ENTER
     je .fin
 
-    cmp al, 8        ; BACKSPACE clásico
+    cmp al, 8          ; BACKSPACE
     je .borrar
 
-    cmp al, 127      ; BACKSPACE en tu consola (^?)
+    cmp al, 127        ; BACKSPACE (^?)
     je .borrar
 
-    cmp cx, 0        ; sin espacio
+    cmp cx, 0          ; sin espacio
     je .ciclo
 
     mov [edx], al
@@ -79,21 +46,30 @@ _start:
 
     jmp .ciclo
 
+.borrar:
+    cmp edx, esi
+    je .ciclo
+
+    dec edx
+
+    ; borrar visualmente
+    mov al, 8
+    call putchar
+    mov al, ' '
+    call putchar
+    mov al, 8
+    call putchar
+
+    jmp .ciclo
 
 .fin:
-    mov byte [edx], 0   ; fin de cadena
+    mov byte [edx], 0
 
+    pop esi
     pop cx
     pop edx
     ret
-   
-    
-  
 
-    
-
-section	.data
-    msg1 db "Ingresa una cadena: ",0
-    nlin db 0xa
-    len db 64
-    cad	times 64 db 0
+section .data
+msg1 db "Ingresa una cadena: ",0
+cad times 64 db 0
