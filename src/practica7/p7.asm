@@ -21,13 +21,85 @@ _start:
     mov edx, cad        ;   edx apunta al inicio por que en capturar no lo moviste edx y cad solo es la direccion incial
     call puts     ; imprime edx
 
+    ; Salto de líne pra que se vea mejor
+    mov al, [nlin]
+    call putchar
 
+    mov edx, cad 
+    call ATOI
 
     ; Salida correcta
     mov eax, 1
     mov ebx, 0
     int 0x80
 
+;=============================================================================
+;ATOI
+
+AATOI:
+    push edx
+    push esi
+    push ebx
+
+    xor eax, eax        ; eax = resultado = 0
+    xor esi, esi        ; índice = 0
+    mov ebx, 1          ; signo = +1
+
+; =========================
+; Ignorar espacios iniciales
+.skip_spaces:
+    mov al, [edx+esi]
+    cmp al, ' '
+    jne .check_sign
+    inc esi
+    jmp .skip_spaces
+
+; =========================
+; Revisar signo
+.check_sign:
+    cmp al, '-'
+    jne .check_plus
+    mov ebx, -1         ; signo negativo
+    inc esi
+    jmp .convert
+
+.check_plus:
+    cmp al, '+'
+    jne .convert
+    inc esi
+
+; =========================
+; Convertir dígitos
+.convert:
+    mov al, [edx+esi]
+
+    cmp al, '0'
+    jl .fin             ; si < '0' → salir
+    cmp al, '9'
+    jg .fin             ; si > '9' → salir
+
+    sub al, '0'         ; convertir ASCII → número
+
+    movzx ecx, al       ; ecx = digito
+
+    imul eax, eax, 10   ; resultado *= 10
+    add eax, ecx        ; resultado += digito
+
+    inc esi
+    jmp .convert
+
+; =========================
+.fin:
+    cmp ebx, 1
+    je .salir
+
+    neg eax             ; aplicar signo negativo
+
+.salir:
+    pop ebx
+    pop esi
+    pop edx
+    ret
 
 
 ; ============================================================================
