@@ -5,178 +5,273 @@ global _start
 
 _start:
 
+    ; ── Capturar cadena numérica ──────────────────────────────────────
     mov edx, msg1
     call puts
-    
-    ; Capturar cadena
-    mov bl, [len]         ; asignamos bytes a bl
-    mov bh,0               ; asignamos cero para que no alla problemas despues
-    mov edx, cad            ;le asignamos 64 espacios vacios
-    call capturar 
 
+    movzx ebx, byte [len]
+    mov edx, cad
+    call capturar
 
-    ; ORIGINAL
-    mov edx, msg2     ; asigna la cadena
-    call puts          ; la muestra 
-    mov edx, cad        ;   edx apunta al inicio por que en capturar no lo moviste edx y cad solo es la direccion incial
-    call puts     ; imprime edx
-
-    ; Salto de líne pra que se vea mejor
     mov al, [nlin]
     call putchar
 
-    mov edx, cad 
-    call ATOI
+    ; ── ATOI: cadena → entero ─────────────────────────────────────────
+    mov edx, cad
+    call ATOI               ; resultado en EAX
+    mov [numero], eax       ; guardar el entero para usarlo después
 
-    ; Salida correcta
+    ; ── Mostrar resultado ATOI ────────────────────────────────────────
+    mov edx, msg2           ; "ATOI resultado (entero): "
+    call puts
+
+    mov eax, [numero]
+    call print_int          ; imprimir el entero directamente
+
+    mov al, [nlin]
+    call putchar
+
+    ; ── ITOA: entero → cadena ─────────────────────────────────────────
+    mov eax, [numero]
+    mov ebx, eax
+    mov edx, buffer
+    mov ecx, 64
+    call ITOA
+
+    ; ── Mostrar resultado ITOA ────────────────────────────────────────
+    mov edx, msg3           ; "ITOA resultado (cadena): "
+    call puts
+
+    mov edx, buffer
+    call puts
+
+    mov al, [nlin]
+    call putchar
+
+    ; ── Salida ────────────────────────────────────────────────────────
     mov eax, 1
     mov ebx, 0
     int 0x80
 
-;=============================================================================
-;ATOI
 
-AATOI:
-    push edx
-    push esi
+; ============================================================================
+; PRINT_INT
+; Descripción : Imprime el entero en EAX usando ITOA internamente
+; Entrada     : EAX = entero a imprimir
+; ============================================================================
+print_int:
+    push eax
     push ebx
+    push ecx
+    push edx
 
-    xor eax, eax        ; eax = resultado = 0
-    xor esi, esi        ; índice = 0
-    mov ebx, 1          ; signo = +1
+    mov ebx, eax
+    mov edx, tmpbuf
+    mov ecx, 32
+    call ITOA
 
-; =========================
-; Ignorar espacios iniciales
+    mov edx, tmpbuf
+    call puts
+
+    pop edx
+    pop ecx
+    pop ebx
+    pop eax
+    ret
+
+
+; ============================================================================
+; ATOI
+; Entrada : EDX = dirección de la cadena
+; Salida  : EAX = entero con signo
+; ============================================================================
+ATOI:
+    push edx
+    push ebx
+    push esi
+
+    xor eax, eax
+    xor esi, esi
+    mov ebx, 1
+
 .skip_spaces:
-    mov al, [edx+esi]
-    cmp al, ' '
-    jne .check_sign
+    movzx ecx, byte [edx+esi]
+    cmp ecx, ' '
+    je .next_space
+    cmp ecx, 0x09
+    je .next_space
+    jmp .check_sign
+
+.next_space:
     inc esi
     jmp .skip_spaces
 
-; =========================
-; Revisar signo
 .check_sign:
-    cmp al, '-'
+    movzx ecx, byte [edx+esi]
+    cmp ecx, '-'
     jne .check_plus
-    mov ebx, -1         ; signo negativo
+    mov ebx, -1
     inc esi
-    jmp .convert
+    jmp .load_digit
 
 .check_plus:
-    cmp al, '+'
-    jne .convert
+    cmp ecx, '+'
+    jne .load_digit
     inc esi
 
-; =========================
-; Convertir dígitos
+.load_digit:
+    movzx ecx, byte [edx+esi]
+
 .convert:
-    mov al, [edx+esi]
+    cmp ecx, '0'
+    jl .fin
+    cmp ecx, '9'
+    jg .fin
 
-    cmp al, '0'
-    jl .fin             ; si < '0' → salir
-    cmp al, '9'
-    jg .fin             ; si > '9' → salir
-
-    sub al, '0'         ; convertir ASCII → número
-
-    movzx ecx, al       ; ecx = digito
-
-    imul eax, eax, 10   ; resultado *= 10
-    add eax, ecx        ; resultado += digito
+    sub ecx, '0'
+    imul eax, eax, 10
+    add eax, ecx
 
     inc esi
+    movzx ecx, byte [edx+esi]
     jmp .convert
 
-; =========================
 .fin:
     cmp ebx, 1
     je .salir
-
-    neg eax             ; aplicar signo negativo
+    neg eax
 
 .salir:
-    pop ebx
     pop esi
+    pop ebx
     pop edx
+    ret
+
+
+; ============================================================================
+; ITOA
+; Entrada : EBX = entero, EDX = buffer destino, ECX = longitud
+; Salida  : EDX = dirección inicio de cadena
+; ============================================================================
+ITOA:
+    push eax
+    push ebx
+    push ecx
+    push esi
+    push edi
+
+    mov edi, edx
+    xor esi, esi
+    mov eax, ebx
+
+    cmp eax, 0
+    jge .es_positivo
+    neg eax
+    mov byte [edi], '-'
+    inc edi
+
+.es_positivo:
+    cmp eax, 0
+    jne .dividir
+    mov byte [edi], '0'
+    inc edi
+    jmp .terminar
+
+.dividir:
+    cmp eax, 0
+    je .reversa
+
+    xor edx, edx
+    mov ecx, 10
+    div ecx
+    add dl, '0'
+    push edx
+    inc esi
+    jmp .dividir
+
+.reversa:
+    cmp esi, 0
+    je .terminar
+    pop edx
+    mov [edi], dl
+    inc edi
+    dec esi
+    jmp .reversa
+
+.terminar:
+    mov byte [edi], 0
+
+    pop edi
+    pop esi
+    pop ecx
+    pop ebx
+    pop eax
     ret
 
 
 ; ============================================================================
 ; CAPTURAR
-
+; ============================================================================
 capturar:
     push edx
-    push cx
+    push ecx
     push esi
 
-    mov esi, 0
-    mov cx, bx   ; en bx esta dentro   esta bh y bl osea 64 bytes de bl
-    dec cx      ; decrementamos para el espacio de 0
+    movzx ecx, bx
+    dec ecx
+    xor esi, esi
 
 .ciclo:
     call getch
-
-    cmp al, 127  ; pregunta si son iguales 
-    jne .verificar  ;si son iguaes no entra a verificar
-
-    cmp esi, 0          ; ¿ya estamos al inicio?
-    je .ciclo           ; no borrar
-
+    cmp al, 127
+    jne .verificar
+    cmp esi, 0
+    je .ciclo
     call borrar
-    dec esi             ; retroceder en el buffer
+    dec esi
     jmp .ciclo
 
 .verificar:
-    cmp al, 0xA         ; si es un ENTER entra en salir
+    cmp al, 0xA
     je .salir
-
-    call putchar    ; muestra  la letrra 
+    call putchar
     mov [edx+esi], al
     inc esi
     loop .ciclo
 
 .salir:
-    mov byte [edx+esi], 0   ; terminar cadena donde realmente acabó
-
+    mov byte [edx+esi], 0
     pop esi
-    pop cx
+    pop ecx
     pop edx
     ret
 
 
-; CAPTURAR fin
-; ============================================================================
-
-
 ; ============================================================================
 ; BORRAR
-
+; ============================================================================
 borrar:
     push ax
-
-    mov al, 0x8   ; backspace
-    call putchar   ; ahora esta el cursor posicion ala izq
-    mov al, ' '    ;  cambia donde  esta el cursor a vacio
-    call putchar   ; imprime y desaparece el valor 
-    mov al, 0x8    ; otro bakspace 
-    call putchar   ; ahora el cursor esta a la izq
-
+    mov al, 0x8
+    call putchar
+    mov al, ' '
+    call putchar
+    mov al, 0x8
+    call putchar
     pop ax
     ret
 
-; BORRAR FIN
+
 ; ============================================================================
-
-
-
 section .data
-    msg1 db "Ingresa una cadena: ",0
-    msg2 db 0xA,"Cadena ingresada: ",0
-    msg3 db 0xA,"Mayusculas: ",0
-    msg4 db 0xA,"Minusculas: ",0
-
+    msg1 db "Ingresa una cadena numerica: ", 0
+    msg2 db "ATOI resultado (entero)  : ", 0
+    msg3 db "ITOA resultado (cadena)  : ", 0
     nlin db 0xA
-    len db 64
+    len  db 64
+    cad  times 64 db 0
 
-    cad times 64 db 0
+section .bss
+    buffer resb 64
+    tmpbuf resb 32
+    numero resd 1           ; guarda el entero resultado de ATOI
