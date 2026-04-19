@@ -9,11 +9,7 @@ _start:
     mov edx, msg1
     call puts              ;funcioon para imprimir edx
 
-    ; Capturar cadena
-    mov bl, [len]         ; asignamos bytes a bl
-    mov bh,0               ; asignamos cero para que no alla problemas despues
-    mov edx, cad            ;le asignamos 64 espacios vacios
-    call capturar       
+       
 
     ; Salto de línea
     mov al, [nlin]
