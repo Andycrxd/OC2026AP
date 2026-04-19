@@ -77,6 +77,27 @@ capturar:
 ; ============================================================================
 
 
+; ============================================================================
+; BORRAR
+
+borrar:
+    push ax
+
+    mov al, 0x8   ; backspace
+    call putchar   ; ahora esta el cursor posicion ala izq
+    mov al, ' '    ;  cambia donde  esta el cursor a vacio
+    call putchar   ; imprime y desaparece el valor 
+    mov al, 0x8    ; otro bakspace 
+    call putchar   ; ahora el cursor esta a la izq
+
+    pop ax
+    ret
+
+; BORRAR FIN
+; ============================================================================
+
+
+
 section .data
     msg1 db "Ingresa una cadena: ",0
     msg2 db 0xA,"Cadena ingresada: ",0
