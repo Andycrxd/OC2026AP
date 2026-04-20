@@ -12,8 +12,8 @@ _start:
        
 
     ; Salto de línea
-    mov al, [nlin]
-    call putchar
+    ;mov al, [nlin]
+    ;call putchar
 
 
     ; CAPTURAR CADENA
