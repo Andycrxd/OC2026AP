@@ -15,6 +15,12 @@ _start:
     mov al, [nlin]
     call putchar
 
+
+    ; CAPTURAR CADENA
+    mov edx, cad     ; buffer donde guardar
+    mov bx, 64       ; tamaño máximo
+    call capturar    ; capturar
+
     ; ORIGINAL
     mov edx, msg2     ; asigna la cadena
     call puts          ; la muestra 
