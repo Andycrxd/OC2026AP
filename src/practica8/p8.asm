@@ -1,24 +1,30 @@
-%include "../../lib/pc_io.inc"
+%include "../../lib/pc_io.inc"  	; incluir declaraciones de procedimiento externos
+								; que se encuentran en la biblioteca libpc_io.a
 
-section .data
-    letra db 'A', 0
+section	.text
+	global _start       ;referencia para inicio de programa
+	
+_start: 
+    ;mensaje original 
 
-section .text
-    global _start
+	mov edx, msg		; edx = dirección de la cadena msg
+	call puts			; imprime cadena msg terminada en valor nulo (0)
 
-_start:
-    mov edx, 65
-    call putchar
 
-    mov edx, 'B'
-    call putchar
+    ;mensaje ya cambiado
+    mov esi,msg
+    add esi,23
+    mov byte[esi], 'X'
 
-    movzx edx, byte [letra]
-    call putchar
+    ;impriem la devuelta el mensaje ya cambiado
+    
+    mov edx, msg		; edx = dirección de la cadena msg
+	call puts			; imprime cadena msg terminada en valor nulo (0)
 
-    mov edx, 10         ; ← '\n' fuerza flush del buffer ⭐
-    call putchar
 
-    mov eax, 1
-    mov ebx, 0
-    int 0x80
+
+	mov	eax, 1	    	; seleccionar llamada al sistema para fin de programa
+	int	0x80        	; llamada al sistema - fin de programa
+
+section	.data
+    msg	db  'abcdefghijklmnopqrstuvwxyz0123456789',0xa,0 
