@@ -13,7 +13,7 @@ _start:
     call putchar
 
     ; imprimir espacio
-    mov edx, ' '
+    mov edx, '-'
     call putchar
 
     ; imprimir letra otra vez
