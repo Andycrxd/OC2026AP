@@ -16,13 +16,14 @@ _start:
     mov edx, cad    ; donde  se va afuardar el valor de l arreglo
     call capturar
 
+    ;salto de linea
     mov al, [nlin]
     call putchar
 
 
 
     ; ── ATOI: cadena → entero ─────────────────────────────────────────
-    mov edx, cad
+    mov edx, cad             ; direccion de la cadena 1
     call ATOI               ; resultado en EAX
     mov [numero], eax       ; guardar el entero para usarlo después
 
@@ -96,9 +97,9 @@ ATOI:
     push ebx
     push esi
 
-    xor eax, eax
-    xor esi, esi
-    mov ebx, 1
+    xor eax, eax   ; se hace asea si mismo en 0 para contrruir el numeorr
+    xor esi, esi   ; indice emnpieza en 0 del strring
+    mov ebx, 1      ; empieza en 1 es para saber el signo 
 
 .skip_spaces:
     movzx ecx, byte [edx+esi]
@@ -238,15 +239,15 @@ capturar:
     jmp .ciclo           ; entra al ciclo devuelta 
 
 .verificar:
-    cmp al, 0xA   ; 
-    je .salir
-    call putchar
-    mov [edx+esi], al
-    inc esi
-    loop .ciclo
+    cmp al, 0xA   ; si le das ala tecla enter 
+    je .salir     ; termina captura
+    call putchar  ; muestra lo que en al
+    mov [edx+esi], al    ; guarda el carcater en memoria
+    inc esi               ; incrementa esi
+    loop .ciclo           ; salta al ciclo 
 
 .salir:
-    mov byte [edx+esi], 0
+    mov byte [edx+esi], 0  ; caracter final de salida 
     pop esi
     pop ecx
     pop edx
