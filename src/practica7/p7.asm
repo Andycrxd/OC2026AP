@@ -22,7 +22,7 @@ _start:
 
 
 
-    ; ── ATOI: cadena → entero ─────────────────────────────────────────
+    ; ── ATOI: cadena a entero ─────────────────────────────────────────
     mov edx, cad             ; direccion de la cadena 1
     call ATOI               ; resultado en EAX
     mov [numero], eax       ; guardar el entero para usarlo después
@@ -55,7 +55,7 @@ _start:
     mov al, [nlin]
     call putchar
 
-    ; ── Salida ────────────────────────────────────────────────────────
+    ; salida 
     mov eax, 1
     mov ebx, 0
     int 0x80
@@ -102,16 +102,16 @@ ATOI:
     mov ebx, 1      ; empieza en 1 es para saber el signo 
 
 .skip_spaces:
-    movzx ecx, byte [edx+esi]
-    cmp ecx, ' '
-    je .next_space
-    cmp ecx, 0x09
-    je .next_space
-    jmp .check_sign
+    movzx ecx, byte [edx+esi]   ; toma el caracter y lo aguarda ecx
+    cmp ecx, ' '                ; compara si teiene espacio
+    je .next_space              ; salta en dado caso si es espacio
+    cmp ecx, 0x09               ; compara si es un TAB
+    je .next_space              ; Salta si es un tab
+    jmp .check_sign            ; revisa si es positico o negativo
 
 .next_space:
-    inc esi
-    jmp .skip_spaces
+    inc esi                 ; incrementa el indice
+    jmp .skip_spaces        ;salta al inicio y sigue avanzando
 
 .check_sign:
     movzx ecx, byte [edx+esi]
