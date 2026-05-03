@@ -6,20 +6,26 @@ global _start
 _start:
 
     ; ── Capturar cadena numérica ──────────────────────────────────────
-    mov edx, msg1
-    call puts
+   
+    mov edx, msg1   ; copia la  1era direccion 
+    call puts       ; inprime el primara direccion de edx asta el caracter nulo
 
-    movzx ebx, byte [len]
-    mov edx, cad
+    //tamano max de la cadena
+
+    movzx ebx, byte [len]   ; Copia el valor a un registro más grande y lo rellena con ceros y despue slo agurda en ebx
+    mov edx, cad    ; donde  se va afuardar el valor de l arreglo
     call capturar
 
     mov al, [nlin]
     call putchar
 
+
+
     ; ── ATOI: cadena → entero ─────────────────────────────────────────
     mov edx, cad
     call ATOI               ; resultado en EAX
     mov [numero], eax       ; guardar el entero para usarlo después
+
 
     ; ── Mostrar resultado ATOI ────────────────────────────────────────
     mov edx, msg2           ; "ATOI resultado (entero): "
@@ -217,22 +223,22 @@ capturar:
     push ecx
     push esi
 
-    movzx ecx, bx
-    dec ecx
-    xor esi, esi
+    movzx ecx, bx    ; copia el tamano que esta en bx osea ebx que es 64 y lo aguarda en  ecx
+    dec ecx          ; reduce 1 para el caracter \0
+    xor esi, esi     ; indice
 
 .ciclo:
-    call getch
-    cmp al, 127
-    jne .verificar
-    cmp esi, 0
-    je .ciclo
-    call borrar
-    dec esi
-    jmp .ciclo
+    call getch           ; lee el carcater y lo aguarda en al
+    cmp al, 127          ; si le das en la tecla borrar
+    jne .verificar       ;salta si no es igual al 
+    cmp esi, 0           ; si no ahi nada escrito no borra
+    je .ciclo            ;  regresa a ciclo si es igual 0 
+    call borrar          ; llama a  la funcion borrar
+    dec esi              ; retrocede indice
+    jmp .ciclo           ; entra al ciclo devuelta 
 
 .verificar:
-    cmp al, 0xA
+    cmp al, 0xA   ; 
     je .salir
     call putchar
     mov [edx+esi], al
@@ -268,8 +274,8 @@ section .data
     msg2 db "ATOI resultado (entero)  : ", 0
     msg3 db "ITOA resultado (cadena)  : ", 0
     nlin db 0xA
-    len  db 64
-    cad  times 64 db 0
+    len  db 64                                              ;  agarra 64 bytes en memoria
+    cad  times 64 db 0                          ; arreglo de 64 bytes
 
 section .bss
     buffer resb 64
