@@ -114,23 +114,27 @@ ATOI:
     jmp .skip_spaces        ;salta al inicio y sigue avanzando
 
 .check_sign:
-    movzx ecx, byte [edx+esi]
-    cmp ecx, '-'
-    jne .check_plus
-    mov ebx, -1
-    inc esi
-    jmp .load_digit
+    movzx ecx, byte [edx+esi]   ;  leer carácter actual
+    cmp ecx, '-'                ; comparar con '-'
+    jne .check_plus             ; si NO es '-', salta
+    mov ebx, -1                 ;  SI es '-'  lo aguarda en  EBX = -1
+    inc esi                     ; Avanza al siguiente carácter
+    jmp .load_digit             ; Se va directo a convertir números
 
+
+; NO es '-' va aqui 
 .check_plus:
-    cmp ecx, '+'
-    jne .load_digit
-    inc esi
+    cmp ecx, '+'                ; ¿Es '+'?
+    jne .load_digit             ; Si NO es '+', salta 
+    inc esi                      ;Avanza al siguiente carácter
 
 .load_digit:
-    movzx ecx, byte [edx+esi]
+    movzx ecx, byte [edx+esi]    ;carácter actual (ya debería ser número)
+;
 
+;Aquí empieza el ciclo principal
 .convert:
-    cmp ecx, '0'
+    cmp ecx, '0'  ;Si es menor que '0'
     jl .fin
     cmp ecx, '9'
     jg .fin
