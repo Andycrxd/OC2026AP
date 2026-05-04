@@ -32,9 +32,10 @@ _start:
     mov edx, msg2           ; "ATOI resultado (entero): "
     call puts
 
-    mov eax, [numero]
+    mov eax, [numero]        ; Recupera el valor guardado
     call print_int          ; imprimir el entero directamente
 
+    ;hace un salto de linea 
     mov al, [nlin]
     call putchar
 
@@ -135,22 +136,22 @@ ATOI:
 ;Aquí empieza el ciclo principal
 .convert:
     cmp ecx, '0'  ;Si es menor que '0'
-    jl .fin
-    cmp ecx, '9'
+    jl .fin        ;   salta si ecx < 0
+    cmp ecx, '9'    ; Si es mayor que '9'
     jg .fin
 
-    sub ecx, '0'
-    imul eax, eax, 10
-    add eax, ecx
+    sub ecx, '0'  ; se le resta -48
+    imul eax, eax, 10  ;Multiplica lo que llevas por 10
+    add eax, ecx        ;Suma el nuevo dígito
 
-    inc esi
-    movzx ecx, byte [edx+esi]
-    jmp .convert
+    inc esi                       ;pasa al siguiente caracter
+    movzx ecx, byte [edx+esi]     ; carga el siguiente carácter
+    jmp .convert                  ;vuelve al inicio del ciclo
 
 .fin:
-    cmp ebx, 1
-    je .salir
-    neg eax
+    cmp ebx, 1   ; SIE SPOSITIVO
+    je .salir    ; No  cambia nada 
+    neg eax   ; canvia el EAX a EAX = -EAX
 
 .salir:
     pop esi
