@@ -10,7 +10,7 @@ _start:
     mov edx, msg1   ; copia la  1era direccion 
     call puts       ; inprime el primara direccion de edx asta el caracter nulo
 
-    //tamano max de la cadena
+    ;tamano max de la cadena
 
     movzx ebx, byte [len]   ; Copia el valor a un registro más grande y lo rellena con ceros y despue slo agurda en ebx
     mov edx, cad    ; donde  se va afuardar el valor de l arreglo
@@ -277,8 +277,8 @@ borrar:
 ; ============================================================================
 section .data
     msg1 db "Ingresa una cadena numerica: ", 0
-    msg2 db "ATOI resultado (entero)  : ", 0
-    msg3 db "ITOA resultado (cadena)  : ", 0
+    msg2 db "ATOI (entero) : ", 0
+    msg3 db "ITOA (cadena) : ", 0
     nlin db 0xA
     len  db 64                                              ;  agarra 64 bytes en memoria
     cad  times 64 db 0                          ; arreglo de 64 bytes
