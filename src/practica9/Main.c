@@ -43,7 +43,9 @@ int main ( void )
 
 
     int arr[5] = {0,6,1,-2,3};
-    printf("\n\r %d",_minimo(arr,5));
+    printf("\n\rEl numero menor del arreglo es: %d",_minimo(arr,5));
+
+    
     
     printf("\n\n\r");
     return 0;
