@@ -22,13 +22,13 @@ _start:
 
 
 
-    ; ── ATOI: cadena a entero ─────────────────────────────────────────
+    ; ── ATOI: cadena a entero ─
     mov edx, cad             ; direccion de la cadena 1
     call ATOI               ; resultado en EAX
     mov [numero], eax       ; guardar el entero para usarlo después
 
 
-    ; ── Mostrar resultado ATOI ────────────────────────────────────────
+    ; ── Mostrar resultado ATOI ───
     mov edx, msg2           ; "ATOI resultado (entero): "
     call puts
 
@@ -39,14 +39,14 @@ _start:
     mov al, [nlin]
     call putchar
 
-    ; ── ITOA: entero → cadena ─────────────────────────────────────────
+    ; ── ITOA: entero → cadena ───
     mov eax, [numero]
     mov ebx, eax
     mov edx, buffer
     mov ecx, 64
     call ITOA
 
-    ; ── Mostrar resultado ITOA ────────────────────────────────────────
+    ; ── Mostrar resultado ITOA ───
     mov edx, msg3           ; "ITOA resultado (cadena): "
     call puts
 
@@ -63,7 +63,6 @@ _start:
 
 
 ; ============================================================================
-; PRINT_INT
 ; Descripción : Imprime el entero en EAX usando ITOA internamente
 ; Entrada     : EAX = entero a imprimir
 ; ============================================================================
@@ -89,7 +88,6 @@ print_int:
 
 
 ; ============================================================================
-; ATOI
 ; Entrada : EDX = dirección de la cadena
 ; Salida  : EAX = entero con signo
 ; ============================================================================
@@ -120,17 +118,17 @@ ATOI:
     jne .check_plus             ; si NO es '-', salta
     mov ebx, -1                 ;  SI es '-'  lo aguarda en  EBX = -1
     inc esi                     ; Avanza al siguiente carácter
-    jmp .load_digit             ; Se va directo a convertir números
+    jmp .load_digit             ; Se va directo a convertir numeros
 
 
 ; NO es '-' va aqui 
 .check_plus:
     cmp ecx, '+'                ; ¿Es '+'?
     jne .load_digit             ; Si NO es '+', salta 
-    inc esi                      ;Avanza al siguiente carácter
+    inc esi                      ;Avanza al siguiente caracter
 
 .load_digit:
-    movzx ecx, byte [edx+esi]    ;carácter actual (ya debería ser número)
+    movzx ecx, byte [edx+esi]    ;carácter actual siendo ya el numero
 ;
 
 ;Aquí empieza el ciclo principal
