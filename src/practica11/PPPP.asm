@@ -8,36 +8,33 @@ section	.text
 
 _start:                   
 
-    mov esi,0
-    mov ebx,0
+    mov esi,1
+    mov ebx,[arreglo]
 
     ciclo:
 
         cmp esi,5
         je salir
 
-        cmp eax,[arreglo+esi*4]
+        cmp ebx,[arreglo+esi*4]
         jg siesMayor
 
         ; si no es mayor 
-        mov eax,[arreglo+esi*4]
+        mov ebx,[arreglo+esi*4]
 
         add esi,1
+
         jmp ciclo
 
 
 
         ;si es mayor
         siesMayor:
-        mov eax,abx
-        dd esi,1
-        jump ciclo
+        add esi,1
+
+        jmp ciclo
 
       
-
-
-        add esi,1
-        jmp ciclo
 
     salir:
 
