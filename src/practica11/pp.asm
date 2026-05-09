@@ -3,7 +3,10 @@
 
 section	.text
 	global _start       ;referencia para inicio de programa
-	
+
+
+; MUESTRA NUMEROS EN FORMA DE CARACTERES ======================================
+
 _start:                   
 
     mov esi,0

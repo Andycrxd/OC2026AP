@@ -3,7 +3,9 @@
 
 section	.text
 	global _start       ;referencia para inicio de programa
-	
+
+; MUESTRA LESTRAS ===================================================================
+
 _start:                   
 
 

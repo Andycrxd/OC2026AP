@@ -1,17 +1,24 @@
 build:	 
 	nasm -f elf p.asm
-	ld -m elf_i386 p.o -o ../../bin/practica8.exe ../../lib/libpc_io.a
+	ld -m elf_i386 p.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
 run:
-	./../../bin/practica8.exe
+	./../../bin/practica11.exe
 
-buildd:	 
+build1:	 
 	nasm -f elf pp.asm
-	ld -m elf_i386 pp.o -o ../../bin/practica8.exe ../../lib/libpc_io.a
-runn:
-	./../../bin/practica8.exe
+	ld -m elf_i386 pp.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
+run1:
+	./../../bin/practica11.exe
 
-builddd:	 
+build2:	 
 	nasm -f elf ppp.asm
-	ld -m elf_i386 ppp.o -o ../../bin/practica8.exe ../../lib/libpc_io.a
-runnn:
-	./../../bin/practica8.exe
+	ld -m elf_i386 ppp.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
+run2:
+	./../../bin/practica11.exe
+
+
+build3:	 
+	nasm -f elf pppp.asm
+	ld -m elf_i386 pppp.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
+run3:
+	./../../bin/practica11.exe

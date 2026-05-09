@@ -4,7 +4,7 @@
 section	.text
 	global _start       ;referencia para inicio de programa
 	
-; SUMA NUMERO ENTEROS ==============================================================
+; Encontrar el mayor ==============================================================
 
 _start:                   
 
@@ -16,8 +16,24 @@ _start:
         cmp esi,5
         je salir
 
+        cmp eax,[arreglo+esi*4]
+        jg siesMayor
+
+        ; si no es mayor 
         mov eax,[arreglo+esi*4]
-        add ebx,eax
+
+        add esi,1
+        jmp ciclo
+
+
+
+        ;si es mayor
+        siesMayor:
+        mov eax,abx
+        dd esi,1
+        jump ciclo
+
+      
 
 
         add esi,1
@@ -32,4 +48,4 @@ _start:
 
 section	.data
 
-    arreglo	dd  1,2,3,4,5
+    arreglo	dd  1,7,3,4,5
