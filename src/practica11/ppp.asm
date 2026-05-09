@@ -7,28 +7,29 @@ section	.text
 _start:                   
 
     mov esi,0
+    mov ebx,0
 
     ciclo:
 
-        mov al,[arreglo+esi]
 
-        cmp al ,0
+
+        cmp esi,5
         je salir
 
-        call putchar 
-        
-        add esi,1
 
+
+        mov eax,[arreglo+esi*4]
+        add ebx,eax
+        
+
+        add esi,1
         jmp ciclo
 
     salir:
-
-
 
 	mov	eax, 1	    	; seleccionar llamada al sistema para fin de programa
 	int	0x80        	; llamada al sistema - fin de programa
 
 section	.data
-    arreglo	db  '1','2','3','4','5',0 
 
-
+    arreglo	dd  1,2,3,4,5
