@@ -38,3 +38,10 @@ build5:
 run5:
 	./../../bin/practica11.exe
 
+
+build6:	 
+	nasm -f elf pppp7.asm
+	ld -m elf_i386 pppp7.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
+run6:
+	./../../bin/practica11.exe
+

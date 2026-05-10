@@ -16,7 +16,7 @@ _start:
 
 	mov eax,10  ; valor divido
 	mov ebx,2
-	mov edx,0   ; residuo
+	mov edx,0   ; residuo aqui se guarda
 
 	div ebx
 
