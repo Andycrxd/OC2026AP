@@ -14,7 +14,7 @@ section	.text
 
 _start:             
 
-	mov eax,10   ; valor divido
+	mov eax,10  ; valor divido
 	mov ebx,2
 	mov edx,0   ; residuo
 
@@ -27,18 +27,19 @@ _start:
 
 
 
+
 	par:
 	mov edx,msg
 	call puts
 
 
+	jmp salir
 
 	impar:
+	mov edx,msg2
+	call puts
 
-
-
-
-
+	salir:
 
     
 	mov	eax, 1	    	; seleccionar llamada al sistema para fin de programa
@@ -47,3 +48,4 @@ _start:
 
 section	.data
 	msg db "Par",10,0
+	msg2 db "Impar",10,0
