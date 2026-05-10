@@ -22,3 +22,19 @@ build3:
 	ld -m elf_i386 pppp.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
 run3:
 	./../../bin/practica11.exe
+
+
+build4:	 
+	nasm -f elf pppp5.asm
+	ld -m elf_i386 pppp5.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
+run4:
+	./../../bin/practica11.exe
+
+
+
+build5:	 
+	nasm -f elf pppp6.asm
+	ld -m elf_i386 pppp6.o -o ../../bin/practica11.exe ../../lib/libpc_io.a
+run5:
+	./../../bin/practica11.exe
+
