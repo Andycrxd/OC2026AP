@@ -11,7 +11,12 @@ _start:
 
     call MostrarArreglo
 
-    ;call OrdenarArreglo
+    call OrdenarArreglo
+
+    mov edx,msgorden
+    call puts
+    
+    call MostrarArreglo
 
 
     ; salida 
@@ -118,10 +123,10 @@ salir2:
     call putchar
 
 
-    push edx
-    push ebx
-    push eax
-    push esi
+    pop edx
+    pop ebx
+    pop eax
+    pop esi
 
     ret
 
@@ -432,6 +437,7 @@ section .data
     len  db 64                                              ;  agarra 64 bytes en memoria
     cad  times 64 db 0                          ; arreglo de 64 bytes
     arreglo times 5 dd 0
+    msgorden db "Mostrar arreglo ordenado: ", 0
 
 section .bss
     buffer resb 64
