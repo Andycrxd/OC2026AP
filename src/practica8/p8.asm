@@ -128,23 +128,87 @@ salir2:
 
 ;=======================================================================================================
 
-;CapturarArreglo=========================================================================================
+;OrdenarArreglo=========================================================================================
 
-CapturarArreglo:
-    push esi
-    push edx
+OrdenarArreglo:
+
+    push eax
     push ebx
+    push edx
+    push esi
+    push edi
+
+    mov esi, 0              ; i = 0
+
+ciclo_externo:
+
+    cmp esi, 4              ; hasta n-2
+    jge fin_ordenar
+
+    mov ebx, esi            ; minimo = i
+
+    mov edi, esi
+    inc edi                 ; j = i + 1
+
+ciclo_interno:
+
+    cmp edi, 5
+    jge intercambio
+
+    ; eax = arreglo[j]
+    mov eax, [arreglo + edi*4]
+
+    ; comparar arreglo[j] con arreglo[minimo]
+    cmp eax, [arreglo + ebx*4]
+
+    jl nuevo_minimo
+
+continuar:
+
+    inc edi
+    jmp ciclo_interno
 
 
- 
+nuevo_minimo:
 
-    pop ebx
-    pop edx
+    mov ebx, edi
+    jmp continuar
+
+
+intercambio:
+
+    ; si minimo == i no hacer nada
+    cmp ebx, esi
+    je siguiente_i
+
+    ; temp = arreglo[i]
+    mov eax, [arreglo + esi*4]
+
+    ; edx = arreglo[minimo]
+    mov edx, [arreglo + ebx*4]
+
+    ; arreglo[i] = arreglo[minimo]
+    mov [arreglo + esi*4], edx
+
+    ; arreglo[minimo] = temp
+    mov [arreglo + ebx*4], eax
+
+
+siguiente_i:
+
+    inc esi
+    jmp ciclo_externo
+
+
+fin_ordenar:
+
+    pop edi
     pop esi
+    pop edx
+    pop ebx
+    pop eax
 
     ret
-
-
 
 ;=========================================================================================================
 
