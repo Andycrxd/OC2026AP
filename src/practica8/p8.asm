@@ -6,6 +6,29 @@ global _start
 _start:
 
 
+    call CapturarArreglo
+
+
+    call MostrarArreglo
+
+    ;call OrdenarArreglo
+
+
+    ; salida 
+    mov eax, 1
+    mov ebx, 0
+    int 0x80
+
+
+
+
+;CapturarArreglo=========================================================================================
+
+CapturarArreglo:
+    push esi
+    push edx
+    push ebx
+
 
     mov esi, 0  ; inicio del ciclo i=0
 
@@ -38,8 +61,26 @@ _start:
     jmp ciclo
 
 
-    terminar: 
+    terminar:
 
+
+    pop ebx
+    pop edx
+    pop esi
+
+    ret
+
+
+
+;===================================================================================================
+
+;MostrarArreglo=========================================================================================
+
+MostrarArreglo:
+    push esi
+    push eax
+    push ebx
+    push edx
 
 mov esi, 0
 
@@ -63,7 +104,6 @@ ciclo2:
     ; imprimir cadena
     mov edx, buffer
     call puts
-
   
 
     inc esi
@@ -71,15 +111,42 @@ ciclo2:
 
 salir2:
 
-   ; salto linea
+
+
+    ; salto linea
     mov al, [nlin]
     call putchar
 
 
-    ; salida 
-    mov eax, 1
-    mov ebx, 0
-    int 0x80
+    push edx
+    push ebx
+    push eax
+    push esi
+
+    ret
+
+
+;=======================================================================================================
+
+;CapturarArreglo=========================================================================================
+
+CapturarArreglo:
+    push esi
+    push edx
+    push ebx
+
+
+ 
+
+    pop ebx
+    pop edx
+    pop esi
+
+    ret
+
+
+
+;=========================================================================================================
 
 
 ; ============================================================================
