@@ -60,7 +60,7 @@ _primo:
     mov ebx,2
     mov edx,0
     mov eax,dword[ebp+8] 
-    div ebx   ; 0:eax / 2
+    div ebx                 ; 0:eax / 2
     cmp edx,0
     je .noprimo
 

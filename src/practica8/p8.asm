@@ -41,7 +41,6 @@ _start:
     terminar: 
 
 
-
 mov esi, 0
 
 ciclo2:
@@ -65,10 +64,17 @@ ciclo2:
     mov edx, buffer
     call puts
 
+  
+
     inc esi
     jmp ciclo2
 
 salir2:
+
+   ; salto linea
+    mov al, [nlin]
+    call putchar
+
 
     ; salida 
     mov eax, 1
