@@ -48,8 +48,8 @@ _imprimir:
     ret  
 
 _primo:
-    push ebp
-    mov ebp , esp
+    push ebp                       ; ebp se mete en la pila dond eya estaba el parametro y el retorno
+    mov ebp , esp                  ; ebp apunta al mismo lugar que esp 
 
     push edx
     push ebx
