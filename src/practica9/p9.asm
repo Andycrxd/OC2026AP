@@ -7,11 +7,13 @@
     push ebx
     mov ecx,-1
     mov ebx,%1
+    
     .%3:
         inc ecx
         cmp ebx,ecx
         je %%salir
         jmp %2
+
     %%salir:
     pop ebx
     pop ecx
@@ -34,6 +36,7 @@ section	.text
     global _primo   
     global _minimo
     global _maximo
+    global _sumatoria
 
 _imprimir:
     push ebp
@@ -134,6 +137,29 @@ _maximo:
     .intercambiar:
         mov eax,dword[edx+ecx*4]
     jmp .calcularMinimo
+
+    .finminimo:
+    PROTO_SALIDA
+    ret
+
+_sumatoria:
+    PROTO_ENTRADA
+
+    mov edx,[ebp+8] ;dir inicio arreglo
+    mov eax,[edx]   ;arr[0]
+
+    FOR dword[ebp+12],.cuerpo2,sum
+    
+    jmp .finminimo
+
+    .cuerpo2:
+    add eax, dword[edx+ecx*4]
+    ;jg .intercambiar
+    jmp .sum
+
+    ;.intercambiar:
+        ;mov eax,dword[edx+ecx*4]
+   ; jmp .sum
 
     .finminimo:
     PROTO_SALIDA
