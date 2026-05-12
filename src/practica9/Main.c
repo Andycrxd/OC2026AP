@@ -3,6 +3,7 @@
 extern void _imprimir(char*,char*);
 extern int _primo(int);
 extern int _minimo(int*,int);
+extern int _maximo(int*,int);
 
 int primoC(int numero);
 
@@ -44,6 +45,8 @@ int main ( void )
 
     int arr[5] = {0,6,1,-2,3};
     printf("\n\rEl numero menor del arreglo es: %d",_minimo(arr,5));
+    printf("\n\rEl numero mayor del arreglo es: %d",_maximo(arr,5));
+
 
     
     

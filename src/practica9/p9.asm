@@ -33,6 +33,7 @@ section	.text
     global _imprimir     
     global _primo   
     global _minimo
+    global _maximo
 
 _imprimir:
     push ebp
@@ -105,6 +106,29 @@ _minimo:
     .cuerpo:
     cmp dword[edx+ecx*4],eax
     jl .intercambiar
+    jmp .calcularMinimo
+
+    .intercambiar:
+        mov eax,dword[edx+ecx*4]
+    jmp .calcularMinimo
+
+    .finminimo:
+    PROTO_SALIDA
+    ret
+
+_maximo:
+    PROTO_ENTRADA
+
+    mov edx,[ebp+8] ;dir inicio arreglo
+    mov eax,[edx]   ;arr[0]
+
+    FOR dword[ebp+12],.cuerpo,calcularMinimo
+    
+    jmp .finminimo
+
+    .cuerpo:
+    cmp dword[edx+ecx*4],eax
+    jg .intercambiar
     jmp .calcularMinimo
 
     .intercambiar:
