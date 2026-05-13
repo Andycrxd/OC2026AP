@@ -34,7 +34,7 @@ int main ( void )
     ".att_syntax prefix;"     
     );
     
-    
+   /* 
     _imprimir("\nABC","\nDEF");
     _imprimir("\nDEF","\nABC");
     _imprimir("\nDEF","\nABC");
@@ -42,7 +42,7 @@ int main ( void )
     printf("ES PRIMO: %d\n", _primo(3));
     printf("ES PRIMO: %d\n", _primo(2));
     printf("ES PRIMO: %d\n", _primo(1));
-
+    */
 
     int arr[5] = {0,6,1,-2,3};
     printf("\n\rEl numero menor del arreglo es: %d",_minimo(arr,5));

@@ -154,12 +154,9 @@ _sumatoria:
 
     .cuerpo2:
     add eax, dword[edx+ecx*4]
-    ;jg .intercambiar
     jmp .sum
 
-    ;.intercambiar:
-        ;mov eax,dword[edx+ecx*4]
-   ; jmp .sum
+
 
     .finminimo:
     PROTO_SALIDA
