@@ -5,6 +5,7 @@ section .text
 global _fun
 global mul
 global sumamacro
+global cambio
 
 
 
@@ -94,6 +95,38 @@ sumamacro:
 
 ;=========================================================================================
 
+%macro Cabiobytes 3
+
+    push esi
+    push ecx
+
+    mov edx,%1
+    mov esi,%2
+    mov ecx,%3
+
+    SHL ,esi
+
+    mov eax, edx
+   
+    pop ecx
+    pop esi
+
+
+%endmacro
+
+
+;   cambio
+cambio:
+
+    push ebp
+    mov ebp, esp
+
+
+    Cabiobytes [ebp+8],[ebp+12],[ebp+16]
+
+    mov esp,ebp
+    pop ebp
+    ret 
 
 
 
