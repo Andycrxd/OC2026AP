@@ -4,15 +4,22 @@ section .text
 
 global _fun
 
+
 _fun:
     push ebp
-    mov ebp, esp
+    mov ebp,esp
+    push ebx
 
-    mov ebx, [ebp+8]
-    mov eax, [ebp+12]
+    mov ebx,[ebp+8]
+    mov eax,[ebp+12]
 
-    add eax, ebx
+    add eax,ebx
 
-    mov esp, ebp
+    pop ebx
+    mov esp,ebp
     pop ebp
     ret
+
+
+
+
