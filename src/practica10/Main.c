@@ -3,6 +3,9 @@
 extern void _imprimir(char*,char*);
 extern int _primo(int);
 extern int _minimo(int*,int);
+extern void set_bit(unsigned char *value, unsigned char bit);
+extern unsigned char get_bit(unsigned char value, unsigned char bit);
+
 
 int primoC(int numero);
 

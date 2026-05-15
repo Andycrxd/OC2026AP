@@ -45,3 +45,9 @@ build6:
 run6:
 	./../../bin/practica11.exe
 
+build7: 
+	gcc -m32 -c Main.c
+	nasm -f elf pppp8.asm
+	gcc -m32 pppp8.o Main.o -L ../../lib -lpc_io -no-pie -z noexecstack -o ../../bin/practica11.exe
+run7:
+	./../../bin/practica11.exe
