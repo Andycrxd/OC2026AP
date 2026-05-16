@@ -21,8 +21,6 @@ int main (void)
     printf("\n\rCambio de numero %d\n", cambio(d,1,2));
 
 
-
-    printf("convertir un numero a binario");
     
     return 0;
 }

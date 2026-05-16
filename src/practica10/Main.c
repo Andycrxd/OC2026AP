@@ -1,69 +1,101 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-extern void _imprimir(char*,char*);
-extern int _primo(int);
-extern int _minimo(int*,int);
 extern void set_bit(unsigned char *value, unsigned char bit);
 extern unsigned char get_bit(unsigned char value, unsigned char bit);
 
+void update_temp(int *temps);
+void update_flags(int *temps, int *last_temps, unsigned char *flags);
+void mostrar_estado(unsigned char flag);
 
-int primoC(int numero);
-
-int main ( void ) 
+int main()
 {
-    char* str = "Hola mundo. \n";
-    printf("%s", str);
-    
-    asm (
-    ".intel_syntax noprefix;"
-    "mov ax, '*';"
-    "push edx;"
-    "push ecx;"
-    "push ebx;"
-    "push eax;"
+    unsigned char banderas[2] = {0,0};
 
-    "mov eax, 4;"
-    "mov ebx, 1;"
-    "mov ecx, esp;"
-    "mov edx, 1;"
-    "int 0x80;"
+    int ultima_lectura[2] = {25,25};
+    int tem_sensores[2] = {25,25};
 
-    "pop eax;"
-    "pop ebx;"
-    "pop ecx;"
-    "pop edx;"
-    ".att_syntax prefix;"     
-    );
-    
-    
-    _imprimir("\nABC","\nDEF");
-    _imprimir("\nDEF","\nABC");
-    _imprimir("\nDEF","\nABC");
-    
-    printf("ES PRIMO: %d\n", _primo(3));
-    printf("ES PRIMO: %d\n", _primo(2));
-    printf("ES PRIMO: %d\n", _primo(1));
+    int opcion;
 
+    srand(time(NULL));
 
-    int arr[5] = {0,6,1,-2,3};
-    printf("\n\r %d",_minimo(arr,5));
-    
-    printf("\n\n\r");
+    do
+    {
+        printf("\nSENSOR 1: ~ %d °C ", tem_sensores[0]);
+        mostrar_estado(banderas[0]);
+
+        printf("\nSENSOR 2: ~ %d °C ", tem_sensores[1]);
+        mostrar_estado(banderas[1]);
+
+        printf("\n\n[1] Actualizar");
+        printf("\n[2] Salir");
+        printf("\nSeleccionar opcion: ");
+        scanf("%d",&opcion);
+
+        if(opcion == 1)
+        {
+            update_temp(tem_sensores);
+
+            update_flags(
+                tem_sensores,
+                ultima_lectura,
+                banderas
+            );
+        }
+
+    }while(opcion != 2);
+
     return 0;
 }
-
-
-int primoC(int numero)
+void update_temp(int *temps)
 {
-    int div;
-    if(numero % 2 == 0)
-        return 0;
-    div = numero / 2 ;
-    while(div>2)
+    temps[0] += (rand() % 11) - 5;
+    temps[1] += (rand() % 11) - 5;
+}
+
+void update_flags(int *temps, int *last_temps, unsigned char *flags)
+{
+    int i;
+    int dif;
+
+    for(i=0; i<2; i++)
     {
-        if(numero % div == 0)
-            return 0;
-        div--;
+        flags[i] = 0;
+
+        dif = temps[i] - last_temps[i];
+
+        if(dif > 0)
+        {
+            set_bit(&flags[i],5);
+
+            if(dif == 1)
+                set_bit(&flags[i],1);
+
+            else if(dif == 2)
+                set_bit(&flags[i],2);
+
+            else
+                set_bit(&flags[i],3);
+        }
+        else if(dif < 0)
+        {
+            set_bit(&flags[i],4);
+
+            if(dif == -1)
+                set_bit(&flags[i],1);
+
+            else if(dif == -2)
+                set_bit(&flags[i],2);
+
+            else
+                set_bit(&flags[i],3);
+        }
+        else
+        {
+            set_bit(&flags[i],0);
+        }
+
+        last_temps[i] = temps[i];
     }
-    return 1;
 }

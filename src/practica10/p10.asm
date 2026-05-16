@@ -2,62 +2,46 @@
 								; que se encuentran en la biblioteca libpc_io.a
 
 
-section	.text
-    global _imprimir     
-    global _primo    
+global set_bit
+global get_bit
 
-_imprimir:
+section .text
+
+; void set_bit(unsigned char *value, unsigned char bit)
+
+set_bit:
+
     push ebp
-    mov ebp , esp
+    mov ebp, esp
 
-    mov edx,[ebp+8]    ;PRIMER PARAMETRO
-    call puts
-    mov edx,[ebp+12]   ;SEGUNDO PARAMETRO
-    call puts     
+    mov eax, [ebp+8]      ; puntero value
+    mov cl, [ebp+12]      ; bit
 
-    mov esp, ebp       ;Restaurar el puntero de la pila (libera el espacio reservado para las variables locales)
+    mov bl, 1
+    shl bl, cl            ; 1 << bit
+
+    or byte [eax], bl     ; activar bit
+
     pop ebp
-    ret  
+    ret
 
-_primo:
+
+
+; unsigned char get_bit(unsigned char value, unsigned char bit)
+
+get_bit:
+
     push ebp
-    mov ebp , esp
+    mov ebp, esp
 
-    push edx
-    push ebx
+    mov al, [ebp+8]       ; value
+    mov cl, [ebp+12]      ; bit
 
-    mov ebx,2
-    mov edx,0
-    mov eax,dword[ebp+8] 
-    div ebx   ; 0:eax / 2
-    cmp edx,0
-    je .noprimo
+    shr al, cl            ; mover el bit a la derecha
 
-    mov ebx,eax   
+    and al, 1             ; obtener solo 0 o 1
 
-    .ciclo:
-    cmp ebx,2
-    jle .siprimo
+    movzx eax, al         ; retorno limpio
 
-    mov edx,0
-    mov eax,dword[ebp+8]
-    div ebx    
-    cmp edx,0
-    je .noprimo
-    dec ebx
-    jmp .ciclo
-
-    .noprimo:
-    mov eax,0
-    jmp .salir
-    
-    .siprimo:
-    mov eax,1
-
-    .salir:  
-    pop ebx
-    pop edx
-    mov esp, ebp       ;Restaurar el puntero de la pila (libera el espacio reservado para las variables locales)
     pop ebp
-    ret  
-
+    ret
