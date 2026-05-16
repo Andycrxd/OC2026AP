@@ -97,19 +97,19 @@ sumamacro:
 
 %macro Cabiobytes 3
 
-    push esi
+    push ebx
     push ecx
 
-    mov edx,%1
-    mov esi,%2
+    mov eax,%1
+    mov bl,%2
     mov ecx,%3
 
-    SHL ,esi
+    mov cl,bl
+    shl eax,cl
 
-    mov eax, edx
    
     pop ecx
-    pop esi
+    pop ebx
 
 
 %endmacro
