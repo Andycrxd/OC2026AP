@@ -99,3 +99,34 @@ void update_flags(int *temps, int *last_temps, unsigned char *flags)
         last_temps[i] = temps[i];
     }
 }
+void mostrar_estado(unsigned char flag)
+{
+    if(get_bit(flag,0))
+    {
+        printf("-");
+    }
+
+    else if(get_bit(flag,5))
+    {
+        if(get_bit(flag,1))
+            printf(">");
+
+        else if(get_bit(flag,2))
+            printf(">>");
+
+        else if(get_bit(flag,3))
+            printf(">>>");
+    }
+
+    else if(get_bit(flag,4))
+    {
+        if(get_bit(flag,1))
+            printf("<");
+
+        else if(get_bit(flag,2))
+            printf("<<");
+
+        else if(get_bit(flag,3))
+            printf("<<<");
+    }
+}
