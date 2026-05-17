@@ -6,6 +6,7 @@ global _fun
 global mul
 global sumamacro
 global cambio
+global imprimirBinario
 
 
 
@@ -128,9 +129,34 @@ cambio:
     pop ebp
     ret 
 
+imprimirBinario:
 
+    push ebp
+    mov ebp, esp
 
+    mov ebx, [ebp+8]      ; valor
+    mov ecx, [ebp+12]     ; cantidad de bits
 
+    dec ecx
+
+ciclo2:
+
+    mov edx, ebx
+    shr edx, cl
+    and edx, 1
+
+    add dl, '0'
+
+    mov al, dl
+    call putchar
+
+    dec ecx
+    cmp ecx, -1
+    jne ciclo2
+
+    mov esp, ebp
+    pop ebp
+    ret
 
 
 

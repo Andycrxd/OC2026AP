@@ -4,6 +4,8 @@ extern int _fun(int, int);
 extern int mul(int,int);
 extern int sumamacro(int*,int);
 extern int cambio(int,int,int);
+extern void imprimirBinario(unsigned int valor, int cantBits);
+
 
 int main (void) 
 {
@@ -20,7 +22,8 @@ int main (void)
 
     printf("\n\rCambio de numero %d\n", cambio(d,1,2));
 
-
+    
+    imprimirBinario(24,8);
     
     return 0;
 }
