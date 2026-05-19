@@ -7,7 +7,7 @@ global mul
 global sumamacro
 global cambio
 global imprimirBinario
-
+global imprimirHola
 
 
 ;=====================================================================================
@@ -133,6 +133,10 @@ imprimirBinario:
 
     push ebp
     mov ebp, esp
+    push ebx
+    push ecx
+    push edx
+
 
     mov ebx, [ebp+8]      ; valor
     mov ecx, [ebp+12]     ; cantidad de bits
@@ -154,12 +158,50 @@ ciclo2:
     cmp ecx, -1
     jne ciclo2
 
+    pop edx
+    pop ecx
+    pop ebx
     mov esp, ebp
     pop ebp
     ret
 
+    
+;===============================================================================================
 
 
+imprimirHola:
+    push ebp
+    mov ebp,esp
+
+    push esi
+    push ecx
 
 
+    mov esi,0 
+    mov ecx,[ebp+8]
 
+teto:
+    mov al,[ecx+esi]
+    cmp al,0
+    je out
+
+    push ecx
+    call putchar
+    pop ecx
+
+    inc esi
+    jmp teto
+
+out:
+     
+    mov al, " "
+    call putchar
+
+    
+    pop edx
+    pop ecx
+    pop esi
+
+    mov esp,ebp
+    pop ebp
+    ret

@@ -6,6 +6,9 @@ extern int sumamacro(int*,int);
 extern int cambio(int,int,int);
 extern void imprimirBinario(unsigned int valor, int cantBits);
 
+extern void imprimirHola(char n[]);
+
+
 
 int main (void) 
 {
@@ -14,6 +17,7 @@ int main (void)
     int d=38275;
 
     int arreglo[5] ={1,1,2,3,5};
+
 
     printf("\n\rSuma de dos numeros %d\n ", _fun(8,2));
     printf("\n\rLa multiplicaciopn de %d x %d = %d \n",a,b,mul(a,b));
@@ -24,6 +28,8 @@ int main (void)
 
     
     imprimirBinario(24,8);
+
+    imprimirHola("HOLA");
     
     return 0;
 }
