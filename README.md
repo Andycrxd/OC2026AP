@@ -1,6 +1,7 @@
 Organización de computadoras 2026-1
 <br>
 ------
-Estudiante
+Estudiante:
+-----
 <br>
-Andy Palomares Pintor
+Andy Palomares Pintor | 2216270
