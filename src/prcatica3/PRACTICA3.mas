@@ -1,0 +1,215 @@
+Switch,     Input
+            Store SELECTOR
+
+CASE_1,     LOAD SELECTOR
+            SUBT UNO
+            SkipCond 400
+            Jump CASE_2
+
+			/captura valores 
+			JnS APTURARSH_AySH_B
+   
+/===========================================
+CASE_2,     LOAD SELECTOR
+            SUBT DOS
+            SkipCond 400
+            Jump CASE_3
+
+			/SHL_R = SH_A << SH_B.
+			LOAD CERO
+			STORE I
+			STORE SUMAUX
+			STORE  SHL_R
+			Store I2
+			Store CAMBIO
+			
+			Load SH_A
+			STORE SUMAUX           / AGREGA A SUMAUX PARA SUMAR
+			WHILE2,LOAD SH_B
+				    SUBT I2
+
+					SkipCond 800
+					JUMP SALIR
+					
+		   			JnS SHIFTIZQUIERDA
+					
+					/LA SEGUNDA 
+					LOAD SHL_R
+					STORE SUMAUX
+
+					LOAD I2
+					Add UNO
+					Store I2
+
+					JUMP WHILE2
+
+			
+			/SALIR DE
+			SALIR, LOAD SHL_R
+					Output
+					Jump FIN_SWITCH
+/===============================================		
+
+CASE_3,     LOAD SELECTOR
+            SUBT TRES
+            SkipCond 400
+            Jump CASE_4
+
+			/Caso 3: SHIFT DERECHA
+			LOAD CERO
+			STORE I
+			STORE SHR_R
+			Store I2
+
+			
+			LOAD SH_A
+			Store DIVIDENDO
+			Load DOS
+			Store DIVISOR
+			
+			WHILE4,Load SH_B
+					subt I
+					SkipCond 800
+					Jump salir3
+					
+					//SEGUIR
+					JnS SHIFTDERECHA
+					Load COCIENTE
+					Store DIVIDENDO
+
+					
+					LOAD I
+					add UNO
+					Store I
+
+					JUMP WHILE4
+					
+					
+					
+					salir3,Load DIVIDENDO
+						   Store SHR_R
+					Output
+					jump FIN_SWITCH
+
+/==============================================
+
+CASE_4,     LOAD SELECTOR
+            SUBT CUATRO
+            SkipCond 400
+            Jump FIN_SWITCH
+
+
+            Halt
+
+
+FIN_SWITCH, Jump Switch
+
+
+/============================================
+
+
+APTURARSH_AySH_B,hex 000
+			Input
+			Store SH_A
+			Input
+			Store SH_B
+			JumpI APTURARSH_AySH_B
+
+/===========================================
+			
+SHIFTIZQUIERDA, hex 000
+				Load CERO
+				STORE I
+
+				LOAD CAMBIO
+				SkipCond 400
+				Jump MASDEUNO
+				
+				WHILE, LOAD I
+					Subt DOS
+					SkipCond 000
+					JUMP REGRESO
+	
+					/SALTA PARA SEGUIR EL CICLO ASTA QUE  CUMPLA LA CONDICION
+					LOAD SHL_R
+					ADD SUMAUX
+					STORE SHL_R
+	
+					LOAD I
+					ADD UNO
+					STORE I
+					JUMP WHILE
+
+				MASDEUNO,LOAD I
+				WHILE3, LOAD I
+					Subt UNO
+					SkipCond 000
+					JUMP REGRESO
+	
+					/SALTA PARA SEGUIR EL CICLO ASTA QUE  CUMPLA LA CONDICION
+					LOAD SHL_R
+					ADD SUMAUX
+					STORE SHL_R
+	
+					LOAD I
+					ADD UNO
+					STORE I
+					JUMP WHILE3
+					
+	REGRESO,LOAD UNO
+			Store CAMBIO
+	JUMPI SHIFTIZQUIERDA
+	
+/==============================================================================			
+
+SHIFTDERECHA,HEX 000
+		Load CERO
+        Store COCIENTE 
+		
+		WHILEDE,Load DIVIDENDO
+        Subt DIVISOR
+        SkipCond 000
+        Jump RESTAR
+        Jump FIN
+
+RESTAR, Load DIVIDENDO
+        Subt DIVISOR
+        Store DIVIDENDO
+
+        Load COCIENTE
+        Add UNO
+        Store COCIENTE
+        Jump WHILEDE
+
+FIN,    Load DIVIDENDO
+        Store RESIDUO
+
+        Load COCIENTE
+        /Output
+        Load RESIDUO
+        /Output
+		JumpI SHIFTDERECHA
+
+
+/ Datos del switch
+SELECTOR, DEC 0
+UNO,      DEC 1
+DOS,      DEC 2
+TRES,     DEC 3
+CUATRO,   DEC 4
+/DATOS DEL CAPTURAR
+SH_A,DEC 0
+SH_B,DEC 0
+/SHIFT IZQUIERDA
+SHL_R,dec 0
+SUMAUX,DEC 0
+I,DEC 0
+CERO, DEC 0
+I2,DEC 0
+CAMBIO,DEC 0
+/Caso 3: SHIFT DERECHA
+DIVIDENDO,  DEC 0
+DIVISOR,    DEC 0
+COCIENTE,   DEC 0
+RESIDUO,    DEC 0
+SHR_R,dec 0

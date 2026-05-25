@@ -1,0 +1,159 @@
+SWICHT, Input
+	    STORE SELECT
+	
+case1,Load SELECT
+	    Subt one
+	    SkipCond 400
+	    jump case2
+		/caso 1 capturar valores
+		JnS CAPTURA_XY
+		jump regreso
+			
+		
+
+case2,  Load SELECT
+		Subt dos
+		SkipCond 400
+		jump case3
+		/caso 2 multiplicar los valores
+		JnS MULTIPLICA_XY
+		Load M
+		Output
+		jump regreso
+
+
+		
+case3,Load SELECT
+	  Subt tres
+	  SkipCond 400
+	  jump case4
+	  /potencia
+	  
+	  LOAD dos
+	  Store I2
+	  
+	  LOAD A
+	  STORE RESCAM
+	  FOR4,JnS POTENCIA
+	  LOAD R
+	  Store RESCAM
+	  LOAD B
+	  SUBT I2
+	  SkipCond 800
+	  JUMP VF
+	  LOAD I2
+	  ADD UNO
+	  STORE I2
+	  JUMP FOR4
+	  
+	  VF,LOAD R
+	  Output 
+	  jump regreso
+	  
+	  
+
+
+case4, Load SELECT
+	   Subt cuatro
+	   SkipCond 400
+	   Jump regreso
+	   /fin del programa
+	   Halt
+
+regreso,jump SWICHT
+
+
+
+CAPTURA_XY, HEX 000
+			INPUT
+			STORE A
+			INPUT 
+			STORE B
+			JumpI CAPTURA_XY
+
+MULTIPLICA_XY, HEX 000
+LOAD CERO
+STORE M / M =0
+STORE I / I = 0
+
+Load A
+Subt B
+SkipCond  800 /B<A
+JUMP SIB>A
+FOR, LOAD B
+	 SUBT I
+	 SKIPCOND 800 / I < B
+	 JUMP RETURN	/FALSE
+	/TRUE
+	// M = M +A;
+	LOAD M
+	ADD A
+	STORE M
+	// I++;
+	LOAD I
+	ADD UNO
+	STORE I
+	JUMP FOR
+RETURN, JumpI MULTIPLICA_XY
+
+
+SIB>A,LOAD CERO
+FOR2, LOAD A
+	 SUBT I
+	 SKIPCOND 800 / I < A
+	 JUMP RETURN2	/FALSE
+	/TRUE
+	// M = M +B;
+	LOAD M
+	ADD B
+	STORE M
+	// I++;
+	LOAD I
+	ADD UNO
+	STORE I
+	JUMP FOR2
+RETURN2, JumpI MULTIPLICA_XY
+
+POTENCIA, HEX 000
+LOAD CERO
+STORE R / R =0
+STORE I / I = 0
+
+
+FOR3, LOAD A
+	 SUBT I
+	 SKIPCOND 800 / I < B
+	 JUMP RETURN3	/FALSE
+	/TRUE
+	// M = M +A;
+	LOAD R
+	ADD RESCAM
+	STORE R
+	// I++;
+	LOAD I
+	ADD UNO
+	STORE I
+	JUMP FOR3
+RETURN3, JumpI POTENCIA
+
+
+		
+/valores del menu
+SELECT, DEC 0
+one,dec 1
+dos,dec 2
+tres,dec 3
+cuatro, dec 4
+/valores del Capturar los valores A y B 
+A, DEC 0
+B, DEC 0
+/Valores de la multiplicacion
+CERO, DEC 0
+UNO, DEC 1
+M, DEC 0
+I, DEC 0
+/Valores de potencia
+RESCAM, DEC 0
+R, DEC 0
+I2, DEC 0
+

@@ -1,0 +1,251 @@
+REGRESO,Input 
+		Store SELECT
+
+CASE1,LOAD SELECT
+	  SUBT UNO
+	  SkipCond 400
+	  JUMP CASE2
+	  /CONVERTIR A MINUSCULAS
+	  LOAD INICIO_CADENA
+	   STORE PTR 
+	   JnS CM_CADENA
+
+
+	  
+
+CASE2,LOAD SELECT
+	  SUBT DOS
+	  SkipCond 400
+	  JUMP CASE3
+	  /CONVERTIR A MAYUSCULAS
+
+	  LOAD INICIO_CADENA
+	   STORE PTR 
+	   JnS CMayus_CADENA 
+	   / Jns IM_CADENA
+
+
+
+	  
+
+CASE3,LOAD SELECT
+	  SUBT TRES
+	  SkipCond 400
+	  JUMP CASE4
+	  //MOSTRAR CADENAS
+	  LOAD INICIO_CADENA
+	  STORE PTR
+	  JnS IMPRIMIR_CADENA  
+	  Load Space/espacio entre cadenas
+	  Output
+
+
+
+	  
+
+CASE4,LOAD SELECT
+	  SUBT CUATRO
+	  SkipCond 400
+	  JUMP REGRESO
+
+	  HALT
+
+
+
+
+
+PTR, HEX 00
+IMPRIMIR_CADENA,HEX 00
+		WHILE_IC,	LOADI PTR
+			SkipCond 0C00
+			Jump RETORNO_IC
+		
+			Output
+			LOAD PTR       /
+			ADD UNO       /
+			STORE PTR    /
+			JUMP WHILE_IC
+		RETORNO_IC,JUMPI IMPRIMIR_CADENA
+
+
+CM_CADENA, HEX 00
+WHILE_CM,	LOADI PTR
+			SkipCond 0C00
+			Jump RETORNO_CM
+		
+
+
+			LoadI PTR
+			Subt M90
+			SkipCond 000
+			Jump salto
+			/SALTA SI VALOR <90
+			LoadI PTR
+			Subt M65
+			SkipCond 800
+			jump salto2
+			/salta si el valor >65
+			LoadI PTR
+			ADD MINUS
+			StoreI PTR
+			LoadI PTR
+				LOAD PTR     /  
+				ADD UNO     /mueve al siguinte valor
+				STORE PTR  /
+				JUMP WHILE_CM  /regresa al ciclo
+			salto,LoadI PTR
+				Subt M90
+				SkipCond 400     / verifica si la letra es la A para desminiur
+				jump salto1.2     / si no es salta salto1.2
+				LoadI PTR
+			    ADD MINUS
+			    StoreI PTR
+				LOAD PTR      /
+				ADD UNO      /mueve al siguinte valor
+				STORE PTR   /
+				JUMP WHILE_CM   / regresa al ciclo
+			salto1.2,LoadI PTR   / carga  el valor actual sin modificar			 
+				LOAD PTR        /
+				ADD UNO        /mueve al siguinte valor
+				STORE PTR     /
+				JUMP WHILE_CM /regresa al ciclo
+			salto2,LoadI PTR
+				Subt M65
+				SkipCond 400 
+				jump salto2.2 
+				LoadI PTR
+			    ADD MINUS
+			    StoreI PTR
+				LOAD PTR      /
+				ADD UNO      /mueve al siguinte valor
+				STORE PTR   /
+				JUMP WHILE_CM
+				
+				
+				salto2.2,LoadI PTR
+				LOAD PTR        /
+				ADD UNO        /mueve al siguinte valor
+				STORE PTR     /
+				JUMP WHILE_CM
+			
+			
+		RETORNO_CM,JUMPI CM_CADENA
+
+CMayus_CADENA, HEX 00
+WHILE_CMayus,	LOADI PTR
+			SkipCond 0C00
+			Jump RETORNO_CMayus
+		
+
+
+			LoadI PTR
+			Subt M122
+			SkipCond 000
+			Jump salto3
+			/SALTA SI VALOR <122
+			LoadI PTR
+			Subt M97
+			SkipCond 800
+			jump salto4
+			/salta si el valor >97
+			LoadI PTR
+			subt Mayus
+			StoreI PTR
+			LoadI PTR
+				LOAD PTR     /  
+				ADD UNO     /mueve al siguinte valor
+				STORE PTR  /
+				JUMP WHILE_CMayus  /regresa al ciclo
+			salto3,LoadI PTR
+				Subt M122
+				SkipCond 400     / verifica si la letra es la A para desminiur
+				jump salto3.2     / si no es salta salto1.2
+				LoadI PTR
+			    subt Mayus
+			    StoreI PTR
+				LOAD PTR      /
+				ADD UNO      /mueve al siguinte valor
+				STORE PTR   /
+				JUMP WHILE_CMayus   / regresa al ciclo
+			salto3.2,LoadI PTR       / carga  el valor actual sin modificar			
+				LOAD PTR        /
+				ADD UNO        /mueve al siguinte valor
+				STORE PTR     /
+				JUMP WHILE_CMayus /regresa al ciclo
+			salto4,LoadI PTR
+				Subt M97
+				SkipCond 400 
+				jump salto4.2 
+				LoadI PTR
+			    subt Mayus
+			    StoreI PTR
+				LOAD PTR      /
+				ADD UNO      /mueve al siguinte valor
+				STORE PTR   /
+				JUMP WHILE_CMayus
+				
+				
+				salto4.2,LoadI PTR
+				LOAD PTR        /
+				ADD UNO        /mueve al siguinte valor
+				STORE PTR     /
+				JUMP WHILE_CMayus
+			
+			
+		RETORNO_CMayus,JUMPI CMayus_CADENA
+
+
+
+		
+INICIO_CADENA, ADR CADENA	
+/CADENA = "OrGaniZaciOn de Computadoras"	
+CADENA, DEC 79	
+DEC 114  	
+DEC 71	 	
+DEC 97			
+DEC 110	
+DEC 105	
+DEC 90
+DEC 97	
+DEC 99	
+DEC 105	
+DEC 79	
+DEC 110	
+DEC 32	
+DEC 100	
+DEC 101	
+DEC 32	
+DEC 67	
+DEC 111
+DEC 109
+DEC 112	
+DEC 117	
+DEC 116	
+DEC 97	
+DEC 100	
+DEC 111	
+DEC 114	
+DEC 97	
+DEC 115	
+DEC 00	
+
+
+
+//VALOREWS DEL SWICH
+SELECT,DEC 0
+UNO, DEC 1
+DOS,DEC 2
+TRES,DEC 3
+CUATRO,DEC 4
+
+/valores de minus
+MINUS, DEC 32
+M90,DEC 90
+M65, DEC 65
+/valores de mayus
+Mayus, DEC 32
+M122,DEC 122
+M97, DEC 97
+
+/ espacio en marie 
+Space, DEC 32

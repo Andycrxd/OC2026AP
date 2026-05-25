@@ -1,0 +1,726 @@
+Switch,     Input
+            Store SELECTOR
+
+/=================================================================================================
+CASE_1,     LOAD SELECTOR
+            SUBT UNO
+            SkipCond 400
+            Jump CASE_2
+
+
+			LoadImmi 9
+			Store NUM8
+			
+			Load D_BASE2
+			Store D_BASE
+
+			Load D_PTR2
+			Store D_PTR
+			
+			CICLO,LOAD NUM8
+			SUBT UNO
+			SkipCond 0C00
+			JUMP SALIRYA
+			/SI AUN NO LLEGA A 0 
+
+			LoadImmi 0
+			Store I_P
+			Store LIM
+			Store INC
+			
+			LoadImmi 1
+			Store INC/asignar inc, avanzar en columnas
+			
+			LOAD NUM8
+			SUBT N8
+			SkipCond 400
+			JUMP SALTOO1
+			
+			LOAD D_BASE
+			Store D_PTR
+			LOAD ROJO
+			Store COLOR
+			JnS PINTAR
+
+			LOAD D_BASE
+			Add N16
+			Store D_BASE
+			Store D_PTR
+			LOAD AZUL
+			Store COLOR
+			JnS PINTAR
+
+
+			LOAD NUM8
+			SUBT UNO 
+			STORE NUM8
+			JUMP CICLO
+
+
+SALTOO1,LOAD D_BASE
+			Add N16
+			Store D_BASE
+			Store D_PTR
+			LOAD ROJO
+			Store COLOR
+			JnS PINTAR
+
+
+			LOAD D_BASE
+			Add N16
+			Store D_BASE
+			Store D_PTR
+			LOAD AZUL
+			Store COLOR
+			JnS PINTAR
+
+
+			LOAD NUM8
+			SUBT UNO 
+			STORE NUM8
+			JUMP CICLO
+			
+
+			SALIRYA,Load UNO
+			Jump FIN_SWITCH
+
+/==========================================================================
+
+CASE_2,     LOAD SELECTOR
+            SUBT DOS
+            SkipCond 400
+            Jump CASE_3
+
+
+			LoadImmi 0
+			Store I_P
+			Store LIM
+			Store INC
+
+			LoadImmi 9
+			Store NUM8
+
+			Load D_BASE2
+			Store D_BASE
+
+			Load D_PTR2
+			Store D_PTR
+			
+			
+
+	CICLO2,LOAD NUM8
+			SUBT UNO
+			SkipCond 0C00
+			JUMP SALIRYA2
+
+			LOAD NUM8
+			SUBT N8
+			SkipCond 400 
+			JUMP SALTOO2
+
+			LOAD ROJO
+			Store COLOR
+			
+			LOAD N16
+			Store INC       / ← bajar (INC = +16) ✓  (si quieres subir, usa -16)
+			
+			LOAD N16
+			Store LIM       / ← pintar 16 píxeles ← ¡ESTO FALTABA!
+			
+			JnS PINTAR
+										
+			Load D_PTR
+			ADD N1
+			Store D_PTR      /← avanzar una columna a la derecha ✓
+			
+			LOAD AZUL
+			Store COLOR
+			
+			LOAD M16
+			Store INC       / ← bajar (INC = +16) ✓  (si quieres subir, usa -16)
+			
+			LOAD N16
+			Store LIM       / ← pintar 16 píxeles ← ¡ESTO FALTABA!
+			
+			JnS PINTAR
+
+
+
+			LOAD NUM8
+			SUBT UNO 
+			STORE NUM8
+			JUMP CICLO2
+
+			SALTOO2,Load D_PTR
+			ADD N1
+			Store D_PTR      /← avanzar una columna a la derecha ✓
+			
+			
+			LOAD ROJO
+			Store COLOR
+			
+			LOAD N16
+			Store INC       / ← bajar (INC = +16) ✓  (si quieres subir, usa -16)
+			
+			LOAD N16
+			Store LIM       / ← pintar 16 píxeles ← ¡ESTO FALTABA!
+			
+			JnS PINTAR
+										
+			Load D_PTR
+			ADD N1
+			Store D_PTR      /← avanzar una columna a la derecha ✓
+			
+			LOAD AZUL
+			Store COLOR
+			
+			LOAD M16
+			Store INC       / ← bajar (INC = +16) ✓  (si quieres subir, usa -16)
+			
+			LOAD N16
+			Store LIM       / ← pintar 16 píxeles ← ¡ESTO FALTABA!
+			
+			JnS PINTAR
+
+
+
+			LOAD NUM8
+			SUBT UNO 
+			STORE NUM8
+			JUMP CICLO2
+
+
+            SALIRYA2,Jump FIN_SWITCH
+
+
+/====================================================================================
+CASE_3,     LOAD SELECTOR
+            SUBT TRES
+            SkipCond 400
+            Jump CASE_4
+
+			LoadImmi 0
+			Store I_P2
+			Store LIM2
+			Store INC2
+
+			LoadImmi 9
+			Store NUM8
+
+			LoadImmi 1
+			Store INC2/asignar inc, avanzar en columnas
+
+			Load D_BASE2
+			Store D_BASE
+
+			Load D_PTR2
+			Store D_PTR
+
+			LoadImmi 5
+			STORE VALOR4
+			
+	CICLON,LOAD VALOR4	
+			SUBT UNO
+			SkipCond 0C00
+			JUMP SALIRYADEFINITIVO
+
+			LoadImmi 9
+			Store NUM8
+			
+	CICLO3,LOAD NUM8
+			SUBT UNO
+			SkipCond 0C00
+			JUMP SALIRYA3
+
+			LOAD NUM8
+			SUBT N8
+			SkipCond 400 
+			JUMP SALTOO3
+			
+			LOAD D_BASE
+			Store D_PTR
+			LOAD NEGRO
+			Store COLOR2
+			JnS PINTAR2
+
+			LOAD D_BASE
+			Add DOS
+			Store D_BASE
+			Store D_PTR
+			LOAD BlANCO
+			Store COLOR2
+			JnS PINTAR2
+
+			
+			LOAD NUM8
+			SUBT UNO 
+			STORE NUM8
+			JUMP CICLO3
+
+
+			SALTOO3,LOAD D_BASE
+			Add DOS
+			Store D_BASE
+			Store D_PTR
+			LOAD NEGRO
+			Store COLOR2
+			JnS PINTAR2
+
+			LOAD D_BASE
+			Add DOS
+			Store D_BASE
+			Store D_PTR
+			LOAD BlANCO
+			Store COLOR2
+			JnS PINTAR2
+
+			
+			LOAD NUM8
+			SUBT UNO 
+			STORE NUM8
+			JUMP CICLO3
+
+  
+            SALIRYA3,LOAD VALOR4
+			SUBT UNO
+			STORE VALOR4
+			
+			LOAD D_BASE
+			Add TREINTACUATRO
+			Store D_BASE
+			Store D_PTR
+
+			JUMP CICLON
+			
+			
+			
+			SALIRYADEFINITIVO,Load  D_BASE2
+							Store D_BASE
+
+							Load D_PTR2
+							Store D_PTR
+
+							LoadImmi 5
+							Store VALOR4
+							
+							LoadImmi 9
+							Store NUM8
+
+							LOAD D_BASE
+							Add TREINTADOS
+							Store D_BASE
+							Store D_PTR
+											
+							CICLON2,LOAD VALOR4	
+							SUBT UNO
+							SkipCond 0C00
+							JUMP SALIRYADEFINITIVOFIN
+				
+							LoadImmi 9
+							Store NUM8
+							
+					CICLO4,LOAD NUM8
+							SUBT UNO
+							SkipCond 0C00
+							JUMP SALIRYA4
+				
+							LOAD NUM8
+							SUBT N8
+							SkipCond 400 
+							JUMP SALTOO4
+							
+							LOAD D_BASE
+							Store D_PTR
+							LOAD BlANCO
+							Store COLOR2
+							JnS PINTAR2
+				
+							LOAD D_BASE
+							Add DOS
+							Store D_BASE
+							Store D_PTR
+							LOAD NEGRO
+							Store COLOR2
+							JnS PINTAR2
+				
+							
+							LOAD NUM8
+							SUBT UNO 
+							STORE NUM8
+							JUMP CICLO4
+				
+				
+							SALTOO4,LOAD D_BASE
+							Add DOS
+							Store D_BASE
+							Store D_PTR
+							LOAD BlANCO
+							Store COLOR2
+							JnS PINTAR2
+				
+							LOAD D_BASE
+							Add DOS
+							Store D_BASE
+							Store D_PTR
+							LOAD NEGRO
+							Store COLOR2
+							JnS PINTAR2
+				
+							
+							LOAD NUM8
+							SUBT UNO 
+							STORE NUM8
+							JUMP CICLO4
+				
+				  
+				            SALIRYA4,LOAD VALOR4
+							SUBT UNO
+							STORE VALOR4
+							
+							LOAD D_BASE
+							Add TREINTACUATRO
+							Store D_BASE
+							Store D_PTR
+				
+							JUMP CICLON2
+			
+			SALIRYADEFINITIVOFIN,Jump FIN_SWITCH
+
+/======================================================================================
+
+CASE_4,     LOAD SELECTOR
+            SUBT CUATRO
+            SkipCond 400
+            Jump CASE_5
+
+			Load N16
+			Store DEGRADO16
+			
+            Load D_BASE2
+            Store D_BASE
+
+            Load D_PTR2
+            Store D_PTR
+
+			LoadImmi 8
+			Store CONTADOR
+			
+            WHILE,LOAD CONTADOR
+					SkipCond 0C00
+					JUMP WHILEFIN
+							
+
+					LOAD CONTADOR
+					subt six
+					SkipCond 400
+					jump sigespiral
+					
+					LOAD ROJO
+		            Store COLOR3
+		
+		            LOAD N16
+		            Store INC3      / bajar
+		
+		            LOAD DEGRADO16
+		            Store LIM3      / 16 pixeles
+		
+		            JnS PINTAR3
+		
+		            / mover a la derecha
+					Load D_PTR
+					ADD N1
+					Store D_PTR
+		
+					LOAD AZUL
+					Store COLOR3
+					
+					LOAD N1
+					Store INC3      / bajar
+					
+					LOAD DEGRADO16
+					Subt UNO
+					Store DEGRADO16
+					Store LIM3
+					
+					JnS PINTAR3
+		
+					/mover parar arriba
+					Load D_PTR
+					ADD M16
+					Store D_PTR
+		
+					LOAD VERDE
+					Store COLOR3
+					
+					LOAD M16
+					Store INC3      / bajar
+					
+					LOAD DEGRADO16
+					Store LIM3
+		
+					JnS PINTAR3
+		
+					/mover ala izquierda 
+					Load D_PTR
+					ADD MENOS1
+					Store D_PTR
+		
+					LOAD BlANCO
+					Store COLOR3
+					
+					LOAD MENOS1
+					Store INC3      / bajar
+					
+					LOAD DEGRADO16
+					Subt UNO
+					Store DEGRADO16
+					Store LIM3
+		
+					JnS PINTAR3
+		
+					/CONTADOR --
+					Load CONTADOR
+					SUBT UNO 
+					STORE CONTADOR
+		
+					Jump WHILE
+		
+					sigespiral,Load D_PTR
+					add N16
+					Store D_PTR
+
+					LOAD ROJO
+		            Store COLOR3
+		
+		            LOAD N16
+		            Store INC3      / bajar
+		
+		            LOAD DEGRADO16
+		            Store LIM3      / 16 pixeles
+		
+		            JnS PINTAR3
+		
+		            / mover a la derecha
+					Load D_PTR
+					ADD N1
+					Store D_PTR
+		
+					LOAD AZUL
+					Store COLOR3
+					
+					LOAD N1
+					Store INC3      / bajar
+					
+					LOAD DEGRADO16
+					Subt UNO
+					Store DEGRADO16
+					Store LIM3
+					
+					JnS PINTAR3
+		
+					/mover parar arriba
+					Load D_PTR
+					ADD M16
+					Store D_PTR
+		
+					LOAD VERDE
+					Store COLOR3
+					
+					LOAD M16
+					Store INC3      / bajar
+					
+					LOAD DEGRADO16
+					Store LIM3
+		
+					JnS PINTAR3
+
+					/final
+					/mover ala izquierda 
+					Load D_PTR
+					ADD MENOS1
+					Store D_PTR
+		
+					LOAD BlANCO
+					Store COLOR3
+					
+					LOAD MENOS1
+					Store INC3      / bajar
+					
+					LOAD DEGRADO16
+					Subt UNO
+					Store DEGRADO16
+					Store LIM3
+		
+					JnS PINTAR3
+		
+					/CONTADOR --
+					Load CONTADOR
+					SUBT UNO 
+					STORE CONTADOR
+		
+					Jump WHILE
+		
+					WHILEFIN,Jump FIN_SWITCH
+
+
+CASE_5,     LOAD SELECTOR
+            SUBT CINCO
+            SkipCond 400
+            Jump FIN_SWITCH
+			
+			
+
+FIN_SWITCH, Jump Switch
+
+
+/SUBRUTINA PINTAR
+COLOR3, HEX 0000
+I_P3, DEC 0
+LIM3, DEC 0
+INC3, DEC 0
+PINTAR3, HEX 000
+		LoadImmi 0
+		Store I_P3
+P_FOR3, LOAD I_P3
+		Subt LIM3
+		SkipCond 0C00 /i<16
+		Jump P_RETURN3
+		/PINTAR
+		LOAD COLOR3
+		StoreI D_PTR
+		/AVANZAR APUNTADOR
+		Load D_PTR
+		ADD INC3
+		Store D_PTR
+		/i++
+		LOAD I_P3
+		Add N1
+		Store I_P3
+		Jump P_FOR3
+P_RETURN3,Load D_PTR
+		Subt INC3
+		Store D_PTR /REGRESAR A LA ULTIMA CELDA PINTADA
+		JumpI PINTAR3
+
+
+
+
+/SUBRUTINA PINTAR
+COLOR, HEX 0000
+I_P, DEC 0
+LIM, DEC 0
+INC, DEC 0
+PINTAR, HEX 0
+		LoadImmi 0
+		Store I_P
+P_FOR, 	LOAD I_P
+		Subt N16
+		SkipConD 0C00 /i<16
+		Jump P_RETURN
+		/PINTAR
+		LOAD COLOR
+		StoreI D_PTR
+		/AVANZAR APUNTADOR
+		Load D_PTR
+		ADD INC
+		Store D_PTR
+		/i++
+		LOAD I_P
+		Add N1
+		Store I_P
+		Jump P_FOR
+P_RETURN,Load D_PTR
+		Subt INC
+		Store D_PTR /REGRESAR A LA ULTIMA CELDA PINTADA
+		JumpI PINTAR
+
+
+
+/SUBRUTINA PINTAR
+COLOR2, HEX 0000
+I_P2, DEC 0
+LIM2, DEC 0
+INC2, DEC 0
+PINTAR2, HEX 0
+		LoadImmi 0
+		Store I_P2
+P_FOR2, LOAD I_P2
+		Subt DOS
+		SkipConD 0C00 /i<2
+		Jump P_RETURN2
+		/PINTAR
+		LOAD COLOR2
+		StoreI D_PTR
+		/AVANZAR APUNTADOR
+		Load D_PTR
+		ADD INC2
+		Store D_PTR
+		/i++
+		LOAD I_P2
+		Add N1
+		Store I_P2
+		Jump P_FOR2
+P_RETURN2,Load D_PTR
+		Subt INC2
+		Store D_PTR /REGRESAR A LA ULTIMA CELDA PINTADA
+		JumpI PINTAR2
+
+
+/ Datos
+SELECTOR, DEC 0
+UNO,      DEC 1
+DOS,      DEC 2
+TRES,     DEC 3
+CUATRO,   DEC 4
+CINCO,    DEC 5
+MENOS1,DEC -1
+
+
+VAL1, DEC 100
+VAL2, DEC 200
+VAL3, DEC 300
+VAL4, DEC 400
+
+
+D_BASE, HEX 0F00
+D_FIN, HEX 0FFF
+D_PTR, HEX 0F00
+
+
+D_BASE2, HEX 0F00
+D_PTR2, HEX 0F00
+
+/R: X111 1100 0000 0000  -> HEX 7C00
+/G: X000 0011 1110 0000  -> HEX 03E0
+/B: X000 0000 0001 1111  -> HEX 001F
+ROJO, HEX 7C00
+VERDE, HEX ACE
+AZUL, HEX 001F
+BlANCO, HEX FFFF
+NEGRO, HEX 0000
+N16, DEC 16
+N1, DEC 1
+N2, DEC 2
+
+MOV,DEC 0
+NUM8,DEC 9
+N8,DEC 9
+TREINTACUATRO,DEC 34
+TREINTADOS,DEC 32
+
+
+M16, DEC -16
+VALOR4,DEC 5
+ACUM,DEC 0
+
+CONTADOR,DEC 8
+DEGRADO16,DEC 16
+six,dec 8
+
+
+
+
+
+
+
+
