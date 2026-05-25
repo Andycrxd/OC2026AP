@@ -34,6 +34,7 @@ get_bit:
     push ebp
     mov ebp, esp
 
+
     mov al, [ebp+8]       ; value
     mov cl, [ebp+12]      ; bit
 
@@ -43,5 +44,7 @@ get_bit:
 
     movzx eax, al         ; retorno limpio
 
+  
+    mov esp,ebp
     pop ebp
     ret

@@ -37,11 +37,8 @@ int main()
         {
             update_temp(tem_sensores);
 
-            update_flags(
-                tem_sensores,
-                ultima_lectura,
-                banderas
-            );
+            update_flags(tem_sensores,ultima_lectura,banderas);
+            
         }
 
     }while(opcion != 2);
@@ -99,17 +96,18 @@ void update_flags(int *temps, int *last_temps, unsigned char *flags)
         last_temps[i] = temps[i];
     }
 }
+
 void mostrar_estado(unsigned char flag)
 {
     if(get_bit(flag,0))
     {
-        printf("-");
+        printf(" -");
     }
 
     else if(get_bit(flag,5))
     {
         if(get_bit(flag,1))
-            printf(">");
+            printf(" >");
 
         else if(get_bit(flag,2))
             printf(">>");
@@ -121,7 +119,7 @@ void mostrar_estado(unsigned char flag)
     else if(get_bit(flag,4))
     {
         if(get_bit(flag,1))
-            printf("<");
+            printf(" <");
 
         else if(get_bit(flag,2))
             printf("<<");
